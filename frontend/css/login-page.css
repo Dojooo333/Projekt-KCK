@@ -1,0 +1,93 @@
+main{
+    width: 1120px;
+    margin: auto;
+}
+
+h1{
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+section.users{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.users .element{
+    padding: 14px 18px 14px 14px;
+    display: flex;
+    align-items: center;
+    min-width: 360px;
+    width: calc();
+    border-radius: 15px;
+}
+.element span{
+    font-size: 20px;
+}
+.element img {
+    width: 70px;
+    height: 70px;
+    margin-right: 14px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    border: 3px solid rgba(0, 33, 50);
+}
+@media screen and (width < 1600px){
+    button:nth-of-type(3n+2).element{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    button:nth-of-type(1n+4).element{
+        margin-top: 20px;
+    }
+}
+@media screen and (width >= 1600px){
+    main{
+        width: 1500px;
+    }
+
+    button:nth-of-type(4n+2).element{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    button:nth-of-type(4n+3).element{
+        margin-right: 20px;
+    }
+    button:nth-of-type(1n+5).element{
+        margin-top: 20px;
+    }
+}
+
+.users .element{
+    padding: 14px 18px 14px 14px;
+    display: flex;
+    align-items: center;
+    width: 360px;
+    border-radius: 15px;
+    cursor: pointer;
+    border: 0;
+    text-align: left;
+}
+.users.students .element{
+    background-color: rgba(118, 192, 209, 0.3);
+}
+.users.lecturers .element{
+    background-color: rgba(228, 105, 98, 0.2);
+}
+.users.students .element:hover{
+    background-color: rgba(118, 192, 209, 0.5);
+}
+.users.lecturers .element:hover{
+    background-color: rgba(228, 105, 98, 0.3);
+}
+.element span{
+    font-size: 20px;
+}
+.element img {
+    width: 70px;
+    height: 70px;
+    margin-right: 14px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    border: 3px solid rgba(0, 33, 50);
+}

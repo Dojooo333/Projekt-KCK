@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/login-page.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kurale&display=swap" rel="stylesheet">
+
+    <script src="js/navbar.js"></script>
+</head>
+<body>
+    
+    <nav class="navbar">
+        <!-- LEWA STRONA -->
+        <div class="nav-section left">
+            <!--<div class="nav-button" role="button">
+                <img class="icon" src="img/icons/undo.png" alt="">
+                <span>Powrót do listy przedmiotów</span> 
+            </div>-->
+        </div>
+
+        <!-- ŚRODEK -->
+        <div class="nav-logo">QUIZ PŁ</div>
+
+        <!-- PRAWA STRONA -->
+        <div id="user" class="nav-section right"> <!--show-logout-->
+            <div class="nav-button" role="button">
+                <div>
+                    <span class="logged-as">Zalogowano jako:</span><br/><span class="logged-user">Jan Kowalski (224051)</span>
+                </div>
+                <img class="profile-img" src="img/profile-image/224051.jpg">
+            </div>
+
+            <div class="logout-popup">
+                <span>Czy chcesz się wylogować?</span>
+                <button class="button-confirm">TAK</button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <form id="users-form" action="/login" method="POST">
+            <h1>Studenci</h1>
+            <section class="users students">
+                <% for(let person of rows){ if(person.isLecturer === 0){ %>
+                <button type="submit" class="element" name="user-login" value="<%= person.login %>">
+                    <img src="img/profile-image/<%= person.imgName %>">
+                    <span><%= person.firstName + " " + person.lastName %><br/>Nr albumu: <%= person.login %></span>
+                </button>
+                <% }} %>
+            </section>
+            <h1>Prowadzący</h1>
+            <section class="users lecturers">
+                <% for(let person of rows){ if(person.isLecturer === 1){ %>
+                <button type="submit" class="element" name="user-login" value="<%= person.login %>">
+                    <img src="img/profile-image/<%= person.imgName %>">
+                    <span><%= person.firstName + " " + person.lastName %><br/>Login: <%= person.login %></span>
+                </button>
+                <% }} %>
+            </section>
+        </form>
+    </main>
+
+</body>
+</html>
