@@ -53,15 +53,21 @@
     </nav>
 
     <main>
-        <% if(userClasses.length === 0){ %>
-        <h3>Nie zostałeś dodany jeszcze do żadnego przedmiotu...</h3>
-        <% } else { for(let userClass of userClasses){ %>
+        <% if(userClasses.length === 0){ if(userInfo.isLecturer === 0) {%>
+            <h3>Nie zostałeś dodany jeszcze do żadnego przedmiotu...</h3>
+            <% }else{ %>
+            <h3>Nie prowadzisz jeszcze żadnego przedmiotu...</h3>
+        <% }} %>
+        
+        <% for(let userClass of userClasses){ %>
         <section>
             <h2><%= userClass.className %></h2>
             <span><%= userClass.description %></span><br/>
-            <span><%= userClass.title + " " + userClass.firstName + " " + userClass.lastName %></span>
+            <% if(userInfo.isLecturer === 0){ %>
+                <span><%= userClass.title + " " + userClass.firstName + " " + userClass.lastName %></span>
+            <% } %>
         </section>
-        <% }} %>
+        <% } %>
     </main>
 
     <footer></footer>
