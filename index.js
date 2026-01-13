@@ -98,6 +98,95 @@ app.get('/', async (req, res) => {
     
 });
 
+app.post('/class', async (req, res) => {
+
+    if(!(req.session && req.session.username)){
+        res.redirect('/login');
+        return;
+    }
+    
+    const login = req.session.username;
+
+    try{
+        
+        const [userData] = await pool.query(
+            "select * from users where login = ?;",
+            login
+        );
+
+        if(userData[0].isLecturer === 1){
+            res.redirect('/lecturer/class/' + req.body['class-id']);
+            return;
+        }else{
+            res.redirect('/student/class/' + req.body['class-id']);
+            return;
+        }
+
+    }catch(err){
+        return res.status(500).send('Error fatching data.');
+    }
+});
+
+app.get('/student/class/:id', async (req, res) => {
+    const classID = req.params.id;
+
+    if(!(req.session && req.session.username)){
+        res.redirect('/login');
+        return;
+    }
+    
+    const login = req.session.username;
+
+    try{
+        
+        const [userData] = await pool.query(
+            "select * from users where login = ?;",
+            login
+        );
+
+        if(userData[0].isLecturer === 1){
+            res.redirect('/');
+            return;
+        }
+
+        res.send("Wybrano przedmiot o ID: " + classID);
+        return;
+
+    }catch(err){
+        return res.status(500).send('Error fatching data.');
+    }
+});
+
+app.get('/lecturer/class/:id', async (req, res) => {
+    const classID = req.params.id;
+
+    if(!(req.session && req.session.username)){
+        res.redirect('/login');
+        return;
+    }
+    
+    const login = req.session.username;
+
+    try{
+        
+        const [userData] = await pool.query(
+            "select * from users where login = ?;",
+            login
+        );
+
+        if(userData[0].isLecturer === 0){
+            res.redirect('/');
+            return;
+        }
+
+        res.send("Wybrano przedmiot o ID: " + classID);
+        return;
+
+    }catch(err){
+        return res.status(500).send('Error fatching data.');
+    }
+});
+
 app.get('/login', async (req, res) => {
 
     if(req.session && req.session.username){

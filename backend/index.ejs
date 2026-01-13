@@ -53,20 +53,24 @@
     </nav>
 
     <main>
-        <% if(userClasses.length === 0){ if(userInfo.isLecturer === 0) {%>
-            <h3>Nie zostałeś dodany jeszcze do żadnego przedmiotu...</h3>
-            <% }else{ %>
-            <h3>Nie prowadzisz jeszcze żadnego przedmiotu...</h3>
-        <% }} %>
-        
-        <% for(let userClass of userClasses){ %>
-        <section>
-            <h2><%= userClass.className %></h2>
-            <span><%= userClass.description %></span><br/>
+        <% if(userClasses.length === 0){ %>
             <% if(userInfo.isLecturer === 0){ %>
-                <span><%= userClass.title + " " + userClass.firstName + " " + userClass.lastName %></span>
+                <h3>Nie zostałeś dodany jeszcze do żadnego przedmiotu...</h3>
+            <% }else{ %>
+                <h3>Nie prowadzisz jeszcze żadnego przedmiotu...</h3>
             <% } %>
-        </section>
+        <% }else{ %>
+            <form id="users-form" action="/class" method="POST">
+                <% for(let userClass of userClasses){ %>
+                    <button class="class-button" type="submit" name="class-id" value="<%= userClass.id %>">
+                        <h2><%= userClass.className %></h2>
+                        <span><%= userClass.description %></span><br/>
+                        <% if(userInfo.isLecturer === 0){ %>
+                            <span><%= userClass.title + " " + userClass.firstName + " " + userClass.lastName %></span>
+                        <% } %>
+                    </button>
+                <% } %>
+            </form>
         <% } %>
     </main>
 

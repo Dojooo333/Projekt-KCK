@@ -16,7 +16,9 @@ h1{
         width: 1500px;
     }
 }
-section{
+button.class-button{
+    text-align: left;
+    width: 100%;
     margin-top: 20px;
     border: 2px solid #76C0D1;
     border-radius: 23px;
@@ -24,13 +26,13 @@ section{
     cursor: pointer;
     transition: all 0.3s ease-out;
 }
-section:first-of-type{
+button.class-button:first-of-type{
     margin-top: 40px;
 }
-section span{
+button.class-button span{
     font-size: 20px;
 }
-section:hover{
+button.class-button:hover{
     background-color: rgba(118, 192, 209, 0.2);
 }
 footer{
