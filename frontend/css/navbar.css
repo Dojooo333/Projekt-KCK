@@ -117,3 +117,8 @@ body{
 .button-confirm:hover {
     background-color: #c9302c;
 }
+
+footer{
+    height: 40px;
+    width: 100%;
+}

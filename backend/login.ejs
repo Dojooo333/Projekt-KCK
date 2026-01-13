@@ -49,7 +49,7 @@
         <form id="users-form" action="/login" method="POST">
             <h1>Studenci</h1>
             <section class="users students">
-                <% for(let person of rows){ if(person.isLecturer === 0){ %>
+                <% for(let person of usersList){ if(person.isLecturer === 0){ %>
                 <button type="submit" class="element" name="user-login" value="<%= person.login %>">
                     <img src="img/profile-image/<%= person.imgName %>">
                     <span><%= person.firstName + " " + person.lastName %><br/>Nr albumu: <%= person.login %></span>
@@ -58,7 +58,7 @@
             </section>
             <h1>Prowadzący</h1>
             <section class="users lecturers">
-                <% for(let person of rows){ if(person.isLecturer === 1){ %>
+                <% for(let person of usersList){ if(person.isLecturer === 1){ %>
                 <button type="submit" class="element" name="user-login" value="<%= person.login %>">
                     <img src="img/profile-image/<%= person.imgName %>">
                     <span><%= person.firstName + " " + person.lastName %><br/>Login: <%= person.login %></span>
@@ -68,5 +68,6 @@
         </form>
     </main>
 
+    <footer></footer>
 </body>
 </html>

@@ -1,0 +1,44 @@
+main{
+    width: 1120px;
+    margin: auto;
+}
+
+h1{
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+@media screen and (width < 1600px){
+    
+}
+@media screen and (width >= 1600px){
+    main{
+        width: 1500px;
+    }
+}
+section{
+    margin-top: 20px;
+    border: 2px solid #76C0D1;
+    border-radius: 23px;
+    padding: 26px;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+}
+section:first-of-type{
+    margin-top: 40px;
+}
+section span{
+    font-size: 20px;
+}
+section:hover{
+    background-color: rgba(118, 192, 209, 0.2);
+}
+footer{
+    height: 40px;
+    width: 100%;
+}
+h3{
+    text-align: center;
+    margin: 50px;
+    color: #595959;
+}

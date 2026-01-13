@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
     <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="css/navbar.css">
-    <link rel="stylesheet" href="css/login-page.css">
+    <link rel="stylesheet" href="css/index-page.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,40 +33,37 @@
         <div id="user" class="nav-section right"> <!--show-logout-->
             <div class="nav-button" role="button">
                 <div>
-                    <span class="logged-as">Zalogowano jako:</span><br/><span class="logged-user">Jan Kowalski (224051)</span>
+                    <span class="logged-as">Zalogowano jako:</span><br/>
+                    <% if(userInfo.isLecturer === 1){ %>
+                        <span class="logged-user"><%= userInfo.title + " " + userInfo.firstName + " " + userInfo.lastName %></span>
+                    <% }else{ %>
+                        <span class="logged-user"><%= userInfo.firstName + " " + userInfo.lastName %> (<%= userInfo.login %>)</span>
+                    <% } %>
                 </div>
-                <img class="profile-img" src="img/profile-image/224051.jpg">
+                <img class="profile-img" src="img/profile-image/<%= userInfo.imgName%>">
             </div>
 
             <div class="logout-popup">
-                <span>Czy chcesz się wylogować?</span>
-                <button class="button-confirm">TAK</button>
+                <form action="/logout" method="GET">
+                    <span>Czy chcesz się wylogować?</span>
+                    <button type="submit" class="button-confirm">TAK</button>
+                </form>
             </div>
         </div>
     </nav>
 
     <main>
-        <form id="users-form" action="/login" method="POST">
-            <h1>Studenci</h1>
-            <section class="users students">
-                <% for(let person of rows){ if(person.isLecturer === 0){ %>
-                <button type="submit" class="element" name="user-login" value="<%= person.login %>">
-                    <img src="img/profile-image/<%= person.imgName %>">
-                    <span><%= person.firstName + " " + person.lastName %><br/>Nr albumu: <%= person.login %></span>
-                </button>
-                <% }} %>
-            </section>
-            <h1>Prowadzący</h1>
-            <section class="users lecturers">
-                <% for(let person of rows){ if(person.isLecturer === 1){ %>
-                <button type="submit" class="element" name="user-login" value="<%= person.login %>">
-                    <img src="img/profile-image/<%= person.imgName %>">
-                    <span><%= person.firstName + " " + person.lastName %><br/>Login: <%= person.login %></span>
-                </button>
-                <% }} %>
-            </section>
-        </form>
+        <% if(userClasses.length === 0){ %>
+        <h3>Nie zostałeś dodany jeszcze do żadnego przedmiotu...</h3>
+        <% } else { for(let userClass of userClasses){ %>
+        <section>
+            <h2><%= userClass.className %></h2>
+            <span><%= userClass.description %></span><br/>
+            <span><%= userClass.title + " " + userClass.firstName + " " + userClass.lastName %></span>
+        </section>
+        <% }} %>
     </main>
 
+    <footer></footer>
 </body>
 </html>
