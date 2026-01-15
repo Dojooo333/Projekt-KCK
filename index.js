@@ -127,6 +127,90 @@ app.post('/class', async (req, res) => {
     }
 });
 
+app.post('/quiz', async(req, res) => {
+    if(!(req.session && req.session.username)){
+        res.redirect('/login');
+        return;
+    }
+    
+    const login = req.session.username;
+
+    try{
+        
+        const [userData] = await pool.query(
+            "select * from users where login = ?;",
+            login
+        );
+
+        const [classID] = await pool.query(
+            "select classID from quizes where id = ?;",
+            req.body['quiz-id']
+        );
+
+        if(userData[0].isLecturer === 1){
+            res.redirect('/lecturer/class/' + classID[0].classID + "/quiz/" + req.body['quiz-id']);
+            return;
+        }else{
+            res.redirect('/student/class/' + classID[0].classID + "/quiz/" + req.body['quiz-id']);
+            return;
+        }
+
+    }catch(err){
+        return res.status(500).send('Error fatching data.');
+    }
+});
+
+app.get('/student/class/:classID/quiz/:quizID', async(req, res) => {
+    const classID = req.params.classID;
+    const quizID = req.params.quizID;
+
+    if(!(req.session && req.session.username)){
+        res.redirect('/login');
+        return;
+    }
+    
+    const login = req.session.username;
+
+    try{
+        
+        const [userData] = await pool.query(
+            "select * from users where login = ?;",
+            login
+        );
+
+        if(userData[0].isLecturer === 1){
+            res.redirect('/');
+            return;
+        }
+
+        const [userClassesData] = await pool.query(
+            "select * from questions where quizID = ?;",
+            quizID
+        );
+        
+        const [questions] = await pool.query(
+            "select * from questions where quizID = ?;",
+            quizID
+        );
+
+        console.log(questions);
+
+        res.send(`Wybrano quiz o ID: ${quizID} w ramach przedmiotu o ID: ${classID}`);
+        
+        res.render('student-quiz.ejs',{
+            userInfo: userData[0],
+            classInfo: userClassesData[0],
+            quizesList: quizes
+        });
+
+
+        return;
+
+    }catch(err){
+        return res.status(500).send('Error fatching data.');
+    }
+});
+
 app.get('/student/class/:id', async (req, res) => {
     const classID = req.params.id;
 
@@ -149,13 +233,35 @@ app.get('/student/class/:id', async (req, res) => {
             return;
         }
 
-        res.send("Wybrano przedmiot o ID: " + classID);
+        const [userClassesData] = await pool.query(
+            `select c.id, c.className, c.description, u.title, u.firstName, u.lastName
+            from classes c
+            left join users u on c.creatorID = u.id
+            where c.id = ?;`,
+            classID
+        );
+
+        //res.send("Wybrano przedmiot o ID: " + classID);
+        const [quizes] = await pool.query(
+            "select * from quizes where classID = ?;",
+            classID
+        );
+
+        console.log(quizes[0].id);
+
+        res.render('student-class.ejs',{
+            userInfo: userData[0],
+            classInfo: userClassesData[0],
+            quizesList: quizes
+        });
+
         return;
 
     }catch(err){
         return res.status(500).send('Error fatching data.');
     }
 });
+
 
 app.get('/lecturer/class/:id', async (req, res) => {
     const classID = req.params.id;

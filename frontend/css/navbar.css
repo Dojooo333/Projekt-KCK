@@ -25,6 +25,10 @@ body{
     align-items: center;
 }
 
+.nav-section.left a{
+    border: none;
+    text-decoration: none;
+}
 .nav-logo {
     font-size: 60px;
     color: rgb(0, 33, 50);
@@ -34,6 +38,7 @@ body{
     display: flex;
     align-items: center;
     border-radius: 15px;
+    background-color: rgba(0, 0, 0, 0);
     color: rgb(0, 33, 50);
     font-size: 20px;
     transition: background-color 0.3s ease-out;

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/student-class.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kurale&display=swap" rel="stylesheet">
+
+    <script src="/js/navbar.js"></script>
+</head>
+<body>
+    
+    <nav class="navbar">
+        <!-- LEWA STRONA -->
+        <div class="nav-section left">
+            <a href='/' class="nav-button" role="button">
+                <img class="icon" src="/img/icons/undo.png" alt="">
+                <span>Powrót do listy przedmiotów</span> 
+            </a>
+        </div>
+
+        <!-- ŚRODEK -->
+        <div class="nav-logo">QUIZ PŁ</div>
+
+        <!-- PRAWA STRONA -->
+        <div id="user" class="nav-section right"> <!--show-logout-->
+            <div class="nav-button" role="button">
+                <div>
+                    <span class="logged-as">Zalogowano jako:</span><br/>
+                    <% if(userInfo.isLecturer === 1){ %>
+                        <span class="logged-user"><%= userInfo.title + " " + userInfo.firstName + " " + userInfo.lastName %></span>
+                    <% }else{ %>
+                        <span class="logged-user"><%= userInfo.firstName + " " + userInfo.lastName %> (<%= userInfo.login %>)</span>
+                    <% } %>
+                </div>
+                <img class="profile-img" src="/img/profile-image/<%= userInfo.imgName%>">
+            </div>
+
+            <div class="logout-popup">
+                <form action="/logout" method="GET">
+                    <span>Czy chcesz się wylogować?</span>
+                    <button type="submit" class="button-confirm">TAK</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="class-info">
+            <h2><%= classInfo.className %></h2>
+            <span><%= classInfo.description %></span><br/>
+            <span><%= classInfo.title + " " + classInfo.firstName + " " + classInfo.lastName %></span>
+        </section>
+        <form id="users-form" action="/quiz" method="POST">
+        <section class="quizes-list">
+            <% for(let quiz of quizesList){ %>
+            <div class="class-button <%= quiz.difficulty %>">
+                <div class="quiz-title">
+                    <h3><%= quiz.title %></h3>
+                    <span><%= (quiz.difficulty === 'hard') ? "Trudny" : ((quiz.difficulty === 'medium') ? "Średni" : "Łatwy") %> - <%= quiz.questionsCount %> pytań</span>
+                </div>
+                <div class="quiz-buttons">
+                    <button class="play" type="submit" name="quiz-id" value="<%= quiz.id %>">
+                        <img class="icon" src="/img/icons/play.png" alt="">
+                        <span>Rozpocznij</span> 
+                    </button>
+                    <button class="ranking">
+                        <img class="icon" src="/img/icons/ranking.png" alt="">
+                        <span>Ranking</span> 
+                    </button> 
+                </div>
+            </div>
+            <% } %>
+        </section>
+        </form>
+    </main>
+
+    <footer></footer>
+</body>
+</html>
