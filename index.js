@@ -19,6 +19,7 @@ app.use(session({
 app.use(express.static('frontend'));
 app.use('/bootstrap',express.static(path.join(__dirname,'node_modules/bootstrap/dist')));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // EJS
 app.set('view engine', 'ejs');
@@ -160,6 +161,115 @@ app.post('/quiz', async(req, res) => {
     }
 });
 
+app.post('/check-answer/:quizID', async(req, res) => {
+    const quizID = req.params.quizID;
+
+    if(!(req.session && req.session.username)){
+        res.redirect('/login');
+        return;
+    }
+    
+    const login = req.session.username;
+
+    console.log(quizID, req.body);
+
+    try{
+
+        const [userData] = await pool.query(
+            "select * from users where login = ?;",
+            login
+        );
+
+        if(userData[0].isLecturer === 1 || req.session.quizes === undefined){
+            res.redirect('/');
+            return;
+        }
+
+        //console.log(quizID, req.session.quizes[quizID].currentQuestion+1);
+
+        const [correct] = await pool.query(
+            "select correctAnswer from questions where quizID = ? and questionNr = ?;",
+            [quizID,(req.session.quizes[quizID].currentQuestion+1)]
+        );
+
+        
+
+        if(correct[0].correctAnswer === req.body['answer']){
+            req.session.quizes[quizID].currentQuestion += 1;
+            if(req.session.quizes[quizID].currentQuestion === req.session.quizes[quizID].allQuestions){
+                delete req.session.quizes[quizID];
+                res.json({
+                    correct: true,
+                    finished: true
+                });
+            }else{
+                res.json({
+                    correct: true,
+                    finished: false
+                });
+            }
+        }else{
+            delete req.session.quizes[quizID];
+            res.json({
+                correct: false,
+                finished: false
+            });
+        }
+
+        // console.log(correct);
+
+        //console.log(correct[0]);
+
+        // if(correct.length === 0){
+        //     res.redirect('/');
+        //     return;
+        // }
+
+        // req.body['answer']
+
+        // const [quizData] = await pool.query(
+        //     "select * from quizes where id = ?;",
+        //     quizID
+        // );
+
+
+        // if(req.session.quizes[quizID] === undefined){
+        //     req.session.quizes[quizID] = {
+        //         currentQuestion: 0,
+        //         allQuestions: quizData[0].questionsCount
+        //     }
+        // }
+
+        // //console.log(req.session.quizes);
+
+        // //console.log(req.session);
+        // //console.log(req.session.quizes['1500']);
+        
+        // const [questionsData] = await pool.query(
+        //     "select question, answerA, answerB, answerC, answerD from questions where quizID = ? and questionNr = ?;",
+        //     [quizID, (req.session.quizes[quizID].currentQuestion+1)]
+        // );
+
+        // console.log(questionsData);
+
+        
+
+        // // res.send(`Wybrano quiz o ID: ${quizID} w ramach przedmiotu o ID: ${classID}`);
+        
+        // res.render('student-quiz.ejs',{
+        //     userInfo: userData[0],
+        //     quizInfo: quizData[0],
+        //     question: questionsData[0]
+        // });
+
+
+        return;
+
+    }catch(err){
+        return res.status(500).send('Error fatching data.');
+    }
+});
+
 app.get('/student/class/:classID/quiz/:quizID', async(req, res) => {
     const classID = req.params.classID;
     const quizID = req.params.quizID;
@@ -183,24 +293,42 @@ app.get('/student/class/:classID/quiz/:quizID', async(req, res) => {
             return;
         }
 
-        const [userClassesData] = await pool.query(
-            "select * from questions where quizID = ?;",
+        const [quizData] = await pool.query(
+            "select * from quizes where id = ?;",
             quizID
         );
+
+
+        if(req.session.quizes[quizID] === undefined){
+            req.session.quizes[quizID] = {
+                currentQuestion: 0,
+                allQuestions: quizData[0].questionsCount
+            }
+        }
+
+        //console.log(req.session.quizes);
+
+        //console.log(req.session);
+        //console.log(req.session.quizes['1500']);
         
-        const [questions] = await pool.query(
-            "select * from questions where quizID = ?;",
-            quizID
+        const [questionsData] = await pool.query(
+            "select question, answerA, answerB, answerC, answerD from questions where quizID = ? and questionNr = ?;",
+            [quizID, (req.session.quizes[quizID].currentQuestion+1)]
         );
 
-        console.log(questions);
+        //console.log(questionsData);
 
-        res.send(`Wybrano quiz o ID: ${quizID} w ramach przedmiotu o ID: ${classID}`);
+        
+
+        // res.send(`Wybrano quiz o ID: ${quizID} w ramach przedmiotu o ID: ${classID}`);
+
+        //console.log(quizData[0], userData[0]);
         
         res.render('student-quiz.ejs',{
             userInfo: userData[0],
-            classInfo: userClassesData[0],
-            quizesList: quizes
+            quizInfo: quizData[0],
+            question: questionsData[0],
+            sessionDetails: req.session.quizes[quizID]
         });
 
 
@@ -247,11 +375,14 @@ app.get('/student/class/:id', async (req, res) => {
             classID
         );
 
-        console.log(quizes[0].id);
+        //console.log(quizes[0].id);
+
+        //console.log(req.session.quizes);
 
         res.render('student-class.ejs',{
             userInfo: userData[0],
             classInfo: userClassesData[0],
+            usersSession: req.session.quizes,
             quizesList: quizes
         });
 
@@ -313,10 +444,11 @@ app.get('/login', async (req, res) => {
 app.post('/login', (req, res) => {
     req.session.isLoggedIn = true;
     req.session.username = req.body['user-login'];
+    req.session.quizes = {};
 
     res.redirect('/');
 
-    console.log(req.body);
+    //console.log(req.body);
 });
 
 app.get('/logout', (req, res) => {

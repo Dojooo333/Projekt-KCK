@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/student-quiz.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kurale&display=swap" rel="stylesheet">
+
+    <script src="/js/navbar.js"></script>
+</head>
+<body>
+    
+    <nav class="navbar">
+        <!-- LEWA STRONA -->
+        <div class="nav-section left">
+            <a href='../' class="nav-button" role="button">
+                <img class="icon" src="/img/icons/undo.png" alt="">
+                <span>Wyjdź z gry</span> 
+            </a>
+        </div>
+
+        <!-- ŚRODEK -->
+        <div class="nav-logo">QUIZ PŁ</div>
+
+        <!-- PRAWA STRONA -->
+        <div id="user" class="nav-section right"> <!--show-logout-->
+            <div class="nav-button" role="button">
+                <div>
+                    <span class="logged-as">Zalogowano jako:</span><br/>
+                    <% if(userInfo.isLecturer === 1){ %>
+                        <span class="logged-user"><%= userInfo.title + " " + userInfo.firstName + " " + userInfo.lastName %></span>
+                    <% }else{ %>
+                        <span class="logged-user"><%= userInfo.firstName + " " + userInfo.lastName %> (<%= userInfo.login %>)</span>
+                    <% } %>
+                </div>
+                <img class="profile-img" src="/img/profile-image/<%= userInfo.imgName%>">
+            </div>
+
+            <div class="logout-popup">
+                <form action="/logout" method="GET">
+                    <span>Czy chcesz się wylogować?</span>
+                    <button type="submit" class="button-confirm">TAK</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="quiz-info">
+            <div class="question-nr">
+                <span>Pytanie <span id="current-question-nr"><%= (sessionDetails.currentQuestion + 1) %></span> z <span id="all-questions-nr"><%= quizInfo.questionsCount %></span>
+                </span>
+            </div>
+            <button id="help5050" class="help" disabled>
+                <span>50 / 50</span>
+            </button>
+            <button id="helpExpert" class="help" disabled>
+                <img class="help-img" src="/img/icons/phone.png">
+            </button>
+            <button id="helpPublic" class="help" disabled>
+                <img class="help-img" src="/img/icons/bar-chart.png">
+            </button>
+        </section>
+        <section class="question"><%= question.question %></section>
+        <form id="send-answer" action="/check-answer/<%= quizInfo.id %>" method="POST">
+            <section class="answers">
+                <button type="submit" id="answerA" class="answer" name="answer" value="A">
+                    <span><%= question.answerA %></span>
+                </button>
+                <button type="submit" id="answerB" class="answer" name="answer" value="B">
+                    <span><%= question.answerB %></span>
+                </button>
+                <button type="submit" id="answerC" class="answer" name="answer" value="C">
+                    <span><%= question.answerC %></span>
+                </button>
+                <button type="submit" id="answerD" class="answer" name="answer" value="D">
+                    <span><%= question.answerD %></span>
+                </button>
+            </section>
+        </form>
+    </main>
+
+    <div id="overlay-correct" class="overlay hidden">
+        <div class="overlay-content">
+            <img class="img-status" src="/img/icons/correct.png" alt="">
+            <h1 id="question-result">Brawo!</h1>
+            <h2>Poprawna odpowiedź!</h2>
+            <a href="./<%= quizInfo.id %>">
+                <div class="next-question">
+                    <span>Następne pytanie!</span>
+                    <img class="img-next" src="/img/icons/next.png" alt="">
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div id="overlay-incorrect" class="overlay hidden">
+        <div class="overlay-content">
+            <img class="img-status" src="/img/icons/incorrect.png" alt="">
+            <h1 id="question-result">Niestety...</h1>
+            <h2>Niepoprawna odpowiedź.</h2>
+            <a href="../">
+                <div class="quit">
+                    <img class="img-back" src="/img/icons/undo.png" alt="">
+                    <span>Powrót do quizów.</span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div id="overlay-finished" class="overlay">
+        <div class="overlay-content">
+            <img class="img-status" src="/img/icons/congrats.png" alt="">
+            <h1 id="question-result">Gratulacje!</h1>
+            <h2>To już wszystkie pytania!</h2>
+            <a href="../">
+                <div class="quit">
+                    <img class="img-back" src="/img/icons/undo.png" alt="">
+                    <span>Powrót do quizów.</span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <footer></footer>
+
+    <script src="/js/quiz.js"></script>
+</body>
+</html>

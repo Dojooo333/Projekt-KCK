@@ -69,7 +69,7 @@
                 <div class="quiz-buttons">
                     <button class="play" type="submit" name="quiz-id" value="<%= quiz.id %>">
                         <img class="icon" src="/img/icons/play.png" alt="">
-                        <span>Rozpocznij</span> 
+                        <span><%= (usersSession[quiz.id] === undefined) ? "Rozpocznij" : "Kontynuuj" %></span> 
                     </button>
                     <button class="ranking">
                         <img class="icon" src="/img/icons/ranking.png" alt="">
