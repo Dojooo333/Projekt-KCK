@@ -55,9 +55,9 @@ DROP TABLE IF EXISTS `classes`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `classes` (
   `id` int NOT NULL,
-  `className` varchar(100) COLLATE utf8mb3_polish_ci NOT NULL,
+  `className` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_polish_ci NOT NULL,
   `creatorID` int NOT NULL,
-  `description` varchar(200) COLLATE utf8mb3_polish_ci NOT NULL,
+  `description` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_polish_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `userID_FK_idx` (`creatorID`),
   CONSTRAINT `userID_FK` FOREIGN KEY (`creatorID`) REFERENCES `users` (`id`)
@@ -75,6 +75,38 @@ INSERT INTO `classes` VALUES (1073,'Politechnika Łódzka - Zagadnienia ogólnou
 UNLOCK TABLES;
 
 --
+-- Table structure for table `games`
+--
+
+DROP TABLE IF EXISTS `games`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `games` (
+  `id` int NOT NULL,
+  `quizID` int NOT NULL,
+  `userID` int NOT NULL,
+  `startedDate` datetime NOT NULL,
+  `finishedDate` datetime DEFAULT NULL,
+  `result` tinyint unsigned NOT NULL,
+  `correctQuestions` smallint unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `games_quizID_FK_idx` (`quizID`),
+  KEY `games_userID_FK_idx` (`userID`),
+  CONSTRAINT `games_quizID_FK` FOREIGN KEY (`quizID`) REFERENCES `quizes` (`id`),
+  CONSTRAINT `games_userID_FK` FOREIGN KEY (`userID`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_polish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `games`
+--
+
+LOCK TABLES `games` WRITE;
+/*!40000 ALTER TABLE `games` DISABLE KEYS */;
+/*!40000 ALTER TABLE `games` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `questions`
 --
 
@@ -85,12 +117,12 @@ CREATE TABLE `questions` (
   `id` int NOT NULL DEFAULT '1500',
   `quizID` int NOT NULL,
   `questionNr` int NOT NULL,
-  `question` varchar(100) COLLATE utf8mb3_polish_ci NOT NULL,
-  `answerA` varchar(45) COLLATE utf8mb3_polish_ci NOT NULL,
-  `answerB` varchar(45) COLLATE utf8mb3_polish_ci NOT NULL,
-  `answerC` varchar(45) COLLATE utf8mb3_polish_ci NOT NULL,
-  `answerD` varchar(45) COLLATE utf8mb3_polish_ci NOT NULL,
-  `correctAnswer` enum('A','B','C','D') COLLATE utf8mb3_polish_ci NOT NULL,
+  `question` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_polish_ci NOT NULL,
+  `answerA` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_polish_ci NOT NULL,
+  `answerB` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_polish_ci NOT NULL,
+  `answerC` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_polish_ci NOT NULL,
+  `answerD` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_polish_ci NOT NULL,
+  `correctAnswer` enum('A','B','C','D') CHARACTER SET utf8mb3 COLLATE utf8mb3_polish_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `questions_quizID_FK_idx` (`quizID`),
   CONSTRAINT `questions_quizID_FK` FOREIGN KEY (`quizID`) REFERENCES `quizes` (`id`)
@@ -117,9 +149,9 @@ DROP TABLE IF EXISTS `quizes`;
 CREATE TABLE `quizes` (
   `id` int NOT NULL,
   `classID` int NOT NULL,
-  `title` varchar(100) COLLATE utf8mb3_polish_ci NOT NULL,
+  `title` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_polish_ci NOT NULL,
   `questionsCount` smallint unsigned NOT NULL,
-  `difficulty` varchar(45) COLLATE utf8mb3_polish_ci NOT NULL,
+  `difficulty` varchar(45) CHARACTER SET utf8mb3 COLLATE utf8mb3_polish_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `quizes_classID_FK_idx` (`classID`),
   CONSTRAINT `quizes_classID_FK` FOREIGN KEY (`classID`) REFERENCES `classes` (`id`)
@@ -145,13 +177,13 @@ DROP TABLE IF EXISTS `users`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `users` (
   `id` int NOT NULL,
-  `login` varchar(50) COLLATE utf8mb3_polish_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8mb3_polish_ci NOT NULL,
-  `title` varchar(20) COLLATE utf8mb3_polish_ci DEFAULT NULL,
-  `firstName` varchar(50) COLLATE utf8mb3_polish_ci NOT NULL,
-  `lastName` varchar(50) COLLATE utf8mb3_polish_ci NOT NULL,
+  `login` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_polish_ci NOT NULL,
+  `email` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_polish_ci NOT NULL,
+  `title` varchar(20) CHARACTER SET utf8mb3 COLLATE utf8mb3_polish_ci DEFAULT NULL,
+  `firstName` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_polish_ci NOT NULL,
+  `lastName` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_polish_ci NOT NULL,
   `isLecturer` tinyint NOT NULL,
-  `imgName` varchar(50) COLLATE utf8mb3_polish_ci DEFAULT 'person.jpg',
+  `imgName` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_polish_ci DEFAULT 'person.jpg',
   PRIMARY KEY (`id`),
   UNIQUE KEY `login_UNIQUE` (`login`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_polish_ci;
@@ -176,4 +208,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-01-15 20:47:42
+-- Dump completed on 2026-01-20 15:59:12
