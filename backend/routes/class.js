@@ -64,7 +64,26 @@ router.get('/lecturer/class/:id', async (req, res) => {
             return;
         }
 
-        res.send("Wybrano przedmiot o ID: " + classID);
+        const [userClassesData] = await pool.query(
+            `select c.id, c.className, c.description, u.title, u.firstName, u.lastName
+            from classes c
+            left join users u on c.creatorID = u.id
+            where c.id = ?;`,
+            classID
+        );
+
+        const [quizes] = await pool.query(
+            "select * from quizes where classID = ?;",
+            classID
+        );
+
+        res.render('lecturer-class.ejs',{
+            userInfo: userData[0],
+            classInfo: userClassesData[0],
+            usersSession: req.session.quizes,
+            quizesList: quizes
+        });
+
         return;
 
     }catch(err){

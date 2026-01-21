@@ -43,9 +43,11 @@ app.get('/', index_route);
 app.get('/student/class/:classID/quiz/:quizID', quiz_route);
 app.get('/student/class/:id', class_route);
 app.get('/lecturer/class/:id', class_route);
+app.get('/lecturer/class/:classID/quiz/:quizID/edit', quiz_route);
 
 app.post('/class', class_api);
 app.post('/quiz', quiz_api);
+app.post('/edit-quiz', quiz_api);
 app.post('/check-answer/:quizID', checkAnswer_api);
 
 app.get('/login', loginLogout_api);

@@ -204,7 +204,7 @@ main .quiz-info{
     min-width: 550px;
 }
 #overlay-finished{
-    background-image: url(../img/congratulations.gif);
+    background-image: url(../gif/confetti.gif);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

@@ -110,7 +110,7 @@ section.class-info{
         margin-top: 20px;
     }
 }
-.play, .ranking{
+.play, .ranking, .add-quiz, .edit-users{
     border-radius: 13px;
     padding: 10px;
     box-sizing: border-box;
@@ -137,11 +137,38 @@ section.class-info{
     flex-direction: row;
     width: auto;
 }
-.quiz-buttons img{
+/* .quiz-buttons img{
+    width: 22px;
+    height: 22px;
+    margin-right: 8px;
+} */
+.icon{
     width: 22px;
     height: 22px;
     margin-right: 8px;
 }
 h3{
     font-size: 24px;
+}
+
+.add-quiz{
+    border: 2px solid rgba(118, 192, 209, 0.5);
+    background-color: rgba(118, 192, 209, 0.1);
+}
+.add-quiz:hover{
+    background-color: rgba(118, 192, 209, 0.3);
+}
+
+.edit-users{
+    border: 2px solid rgba(118, 192, 209, 0.5);
+    background-color: rgba(118, 192, 209, 0.1);
+}
+.edit-users:hover{
+    background-color: rgba(118, 192, 209, 0.3);
+}
+
+.class-options{
+    margin-top: 10px;
+    display: flex;
+    gap: 20px;
 }

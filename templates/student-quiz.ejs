@@ -71,16 +71,16 @@
         <section class="question"><%= question.question %></section>
         <form id="send-answer" action="/check-answer/<%= quizInfo.id %>" method="POST">
             <section class="answers">
-                <button type="submit" id="answerA" class="answer" name="answer" value="A">
+                <button type="submit" id="answerA" class="answer" name="answer" value="a">
                     <span><%= question.answerA %></span>
                 </button>
-                <button type="submit" id="answerB" class="answer" name="answer" value="B">
+                <button type="submit" id="answerB" class="answer" name="answer" value="b">
                     <span><%= question.answerB %></span>
                 </button>
-                <button type="submit" id="answerC" class="answer" name="answer" value="C">
+                <button type="submit" id="answerC" class="answer" name="answer" value="c">
                     <span><%= question.answerC %></span>
                 </button>
-                <button type="submit" id="answerD" class="answer" name="answer" value="D">
+                <button type="submit" id="answerD" class="answer" name="answer" value="d">
                     <span><%= question.answerD %></span>
                 </button>
             </section>
