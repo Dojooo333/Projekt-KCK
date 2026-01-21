@@ -17,6 +17,15 @@ section.class-info{
     padding: 26px;
 }
 
+section.quiz-info{
+    text-align: left;
+    width: 100%;
+    margin-top: 20px;
+    border: 2px solid #76C0D1;
+    border-radius: 23px;
+    padding: 26px;
+}
+
 .quizes-list{
     display: flex;
     flex-wrap: wrap;
@@ -151,24 +160,39 @@ h3{
     font-size: 24px;
 }
 
-.add-quiz{
-    border: 2px solid rgba(118, 192, 209, 0.5);
+.add-quiz, .edit-users{
+    border: 2px solid rgba(118, 192, 209, 0.8);
     background-color: rgba(118, 192, 209, 0.1);
 }
-.add-quiz:hover{
-    background-color: rgba(118, 192, 209, 0.3);
-}
-
-.edit-users{
-    border: 2px solid rgba(118, 192, 209, 0.5);
-    background-color: rgba(118, 192, 209, 0.1);
-}
-.edit-users:hover{
-    background-color: rgba(118, 192, 209, 0.3);
+.add-quiz:hover, .edit-users:hover{
+    background-color: rgba(118, 192, 209, 0.25);
 }
 
 .class-options{
     margin-top: 10px;
     display: flex;
     gap: 20px;
+}
+
+input{
+    border: 0;
+    background-color: rgba(0,0,0,0);
+    color: var(--bs-body-color);
+    width: 100%;
+}
+input:focus{
+    outline: none;
+}
+
+.quiz-info input.input-h2{
+    font-size: 32px;
+}
+
+.auto-expand {
+  width: 100%;
+  overflow: hidden; /* ukrywa scrollbar */
+  resize: none;     /* wyłącza ręczne rozciąganie */
+  min-height: 40px;
+  line-height: 1.5; /* ważne dla estetyki */
+  box-sizing: border-box; /* kluczowe! */
 }

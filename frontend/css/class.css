@@ -151,24 +151,16 @@ h3{
     font-size: 24px;
 }
 
-.add-quiz{
-    border: 2px solid rgba(118, 192, 209, 0.5);
+.add-quiz, .edit-users{
+    border: 2px solid rgba(118, 192, 209, 0.8);
     background-color: rgba(118, 192, 209, 0.1);
 }
-.add-quiz:hover{
-    background-color: rgba(118, 192, 209, 0.3);
-}
-
-.edit-users{
-    border: 2px solid rgba(118, 192, 209, 0.5);
-    background-color: rgba(118, 192, 209, 0.1);
-}
-.edit-users:hover{
-    background-color: rgba(118, 192, 209, 0.3);
+.add-quiz:hover, .edit-users:hover{
+    background-color: rgba(118, 192, 209, 0.25);
 }
 
 .class-options{
-    margin-top: 10px;
+    margin-top: 20px;
     display: flex;
     gap: 20px;
 }

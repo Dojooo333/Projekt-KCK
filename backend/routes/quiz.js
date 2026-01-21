@@ -84,6 +84,13 @@ router.get('/lecturer/class/:classID/quiz/:quizID/edit', async(req, res) => {
             quizID
         );
 
+        const [quizQuestions] = await pool.query(
+            "select * from questions where quizID = ? order by questionNr;",
+            quizID
+        );
+
+        console.log(quizData[0]);
+
 
         // if(req.session.quizes[quizID] === undefined){
         //     req.session.quizes[quizID] = {
@@ -96,10 +103,13 @@ router.get('/lecturer/class/:classID/quiz/:quizID/edit', async(req, res) => {
         //     "select question, answerA, answerB, answerC, answerD from questions where quizID = ? and questionNr = ?;",
         //     [quizID, (req.session.quizes[quizID].currentQuestion+1)]
         // );
+
+        console.log(classData[0]);
         
         res.render('lecturer-quiz.ejs',{
             userInfo: userData[0],
-            classInfo: classData[0]
+            classInfo: classData[0],
+            quizInfo: quizData[0]
             //quizInfo: quizData[0],
             //question: questionsData[0],
             //sessionDetails: req.session.quizes[quizID]
