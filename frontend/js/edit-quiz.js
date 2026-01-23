@@ -1,14 +1,8 @@
-// const textarea = document.getElementById('edit-title');
+const automaticRowSize = document.querySelectorAll('.automatic-row-size');
 
-// textarea.addEventListener('input', () => {
-//   this.style.height = 'auto';
-//   this.style.height = (this.scrollHeight) + 'px';
-// });
-
-
-const textarea = document.querySelector('.auto-expand');
-
-textarea.addEventListener('input', function(){
-  this.style.height = 'auto'; 
-  this.style.height = this.scrollHeight + 'px'; 
+automaticRowSize.forEach(element => {
+  element.addEventListener('input', function(){
+    this.style.height = 'auto'; 
+    this.style.height = this.scrollHeight + 'px'; 
+  });
 });

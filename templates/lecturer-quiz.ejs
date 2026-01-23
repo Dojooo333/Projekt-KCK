@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+
     <link rel="stylesheet" href="/css/navbar.css">
     <link rel="stylesheet" href="/css/lecturer-quiz.css">
 
@@ -18,7 +17,7 @@
     <nav class="navbar">
         <!-- LEWA STRONA -->
         <div class="nav-section left">
-            <a href='/' class="nav-button" role="button">
+            <a href='../../' class="nav-button" role="button">
                 <img class="icon" src="/img/icons/undo.png" alt="">
                 <span>Zakończ edycję</span> 
             </a>
@@ -56,12 +55,77 @@
             <span><%= classInfo.description %></span>
         </section>
         <form id="users-form" action="/quiz-edit" method="POST">
-            <section class="quiz-info">
-                <!-- <textarea id="edit-title" class="input-h2" rows="1" type="text" name="quiz-title" value="<%= classInfo.className %>"></textarea> -->
-                <textarea class="auto-expand" rows="1"><%= classInfo.className %></textarea>
-                <h2><%= classInfo.className %></h2>
-                <span><%= classInfo.description %></span>
-            </section>
+            <fieldset class="quiz-info add-margin-top">
+                <legend>Tytuł quizu</legend>
+                <textarea required class="quiz-title quiz-element automatic-row-size" rows="1" placeholder="<%= classInfo.className %>" autocomplete="off" maxlength="100"><%= classInfo.className %></textarea>
+            </fieldset>
+            <fieldset class="quiz-info">
+                <legend>Poziom trudności</legend>
+                <div class="difficulty">
+                    <input autocomplete="off" type="radio" id="difficulty-easy" class="difficulty-radio" name="difficulty" checked>
+                    <label for="difficulty-easy" class="label-diff easy">Łatwy</label>
+
+                    <input autocomplete="off" type="radio" id="difficulty-medium" class="difficulty-radio" name="difficulty">
+                    <label for="difficulty-medium" class="label-diff medium">Średni</label>
+
+                    <input autocomplete="off" type="radio" id="difficulty-hard" class="difficulty-radio" name="difficulty">
+                    <label for="difficulty-hard" class="label-diff hard">Trudny</label>
+                </div>
+            </fieldset>
+            <fieldset class="quiz-info add-margin-top">
+                <legend>Pytanie nr 1</legend>
+                <textarea required class="quiz-title quiz-element automatic-row-size" rows="1" placeholder="Treść pytania numer 1?" autocomplete="off" maxlength="500">Treść pytania numer 1?</textarea>
+                <section class="answers">
+                    <fieldset class="quiz-answer answer-a wrong-answer">
+                        <legend class="legend-right">Poprawna odpowiedź</legend>
+                        <legend class="legend-wrong">Zła odpowiedź</legend>
+                        <textarea required class="quiz-answer-abcd quiz-element automatic-row-size" rows="1" placeholder="Odpowiedź A" autocomplete="off" maxlength="200">Odpowiedź A</textarea>
+                    </fieldset>
+                    <fieldset class="quiz-answer answer-b wrong-answer">
+                        <legend class="legend-right">Poprawna odpowiedź</legend>
+                        <legend class="legend-wrong">Zła odpowiedź</legend>
+                        <textarea required class="quiz-answer-abcd quiz-element automatic-row-size" rows="1" placeholder="Odpowiedź B" autocomplete="off" maxlength="200">Odpowiedź B</textarea>
+                    </fieldset>
+                    <fieldset class="quiz-answer answer-c wrong-answer">
+                        <legend class="legend-right">Poprawna odpowiedź</legend>
+                        <legend class="legend-wrong">Zła odpowiedź</legend>
+                        <textarea required class="quiz-answer-abcd quiz-element automatic-row-size" rows="1" placeholder="Odpowiedź C" autocomplete="off" maxlength="200">Odpowiedź C</textarea>
+                    </fieldset>
+                    <fieldset class="quiz-answer answer-d wrong-answer">
+                        <legend class="legend-right">Poprawna odpowiedź</legend>
+                        <legend class="legend-wrong">Zła odpowiedź</legend>
+                        <textarea required class="quiz-answer-abcd quiz-element automatic-row-size" rows="1" placeholder="Odpowiedź D" autocomplete="off" maxlength="200">Odpowiedź D</textarea>
+                    </fieldset>
+                </section>
+                <div class="select-right-answer">
+                    <span>Która odpowiedź jest poprawna?</span>
+                    <div class="abcd">
+                        <label>
+                            <input autocomplete="off" type="radio" class="right-answer-radio answer-a-right" name="right-answer-1" value="a" checked>A
+                        </label>
+                        
+                        <label>
+                            <input autocomplete="off" type="radio" class="right-answer-radio answer-b-right" name="right-answer-1" value="b">B
+                        </label>
+
+                        <label>
+                            <input autocomplete="off" type="radio" class="right-answer-radio answer-c-right" name="right-answer-1" value="c">C
+                        </label>
+
+                        <label>
+                            <input autocomplete="off" type="radio" class="right-answer-radio answer-d-right" name="right-answer-1" value="d">D
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="quiz-info">
+                <legend>Pytanie nr 2</legend>
+                <textarea required class="quiz-title quiz-element automatic-row-size" rows="1" placeholder="Treść pytania numer 2?" autocomplete="off" maxlength="100">Treść pytania numer 2?</textarea>
+            </fieldset>
+            <fieldset class="quiz-info">
+                <legend>Pytanie nr 3</legend>
+                <textarea required class="quiz-title quiz-element automatic-row-size" rows="1" placeholder="Treść pytania numer 2?" autocomplete="off" maxlength="100">Treść pytania numer 3?</textarea>
+            </fieldset>
         <% //console.log(classInfo); %>
         </form>
     </main>

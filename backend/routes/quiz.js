@@ -104,7 +104,7 @@ router.get('/lecturer/class/:classID/quiz/:quizID/edit', async(req, res) => {
         //     [quizID, (req.session.quizes[quizID].currentQuestion+1)]
         // );
 
-        console.log(classData[0]);
+        //console.log(classData[0]);
         
         res.render('lecturer-quiz.ejs',{
             userInfo: userData[0],
