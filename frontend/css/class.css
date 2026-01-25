@@ -110,7 +110,7 @@ section.class-info{
         margin-top: 20px;
     }
 }
-.play, .ranking, .add-quiz, .edit-users{
+.play, .ranking, .add-quiz, .edit-users, .new-quiz-link{
     border-radius: 13px;
     padding: 10px;
     box-sizing: border-box;
@@ -122,6 +122,10 @@ section.class-info{
     box-sizing: border-box;
     width: 100%;
     transition: all 0.3s ease-out;
+}
+
+.new-quiz-link{
+    padding: 0;
 }
 
 .ranking{
@@ -163,4 +167,9 @@ h3{
     margin-top: 20px;
     display: flex;
     gap: 20px;
+}
+
+a, a:active, a:hover, a:visited, a:link{
+    text-decoration: none;
+    color: rgb(0, 33, 50);
 }

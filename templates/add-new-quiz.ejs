@@ -54,70 +54,68 @@
             <h2><%= classInfo.className %></h2>
             <span><%= classInfo.description %></span>
         </section>
-        <form id="users-form" action="/quiz-edit/<%= quizInfo.id %>" method="POST">
+        <form id="users-form" action="/add-quiz/<%= classInfo.id %>" method="POST">
             <fieldset class="quiz-info add-margin-top">
                 <legend>Tytuł quizu</legend>
-                <textarea required class="quiz-title quiz-element automatic-row-size" name="title" rows="1" placeholder="<%= quizInfo.title %>" autocomplete="off" maxlength="100"><%= quizInfo.title %></textarea>
+                <textarea required class="quiz-title quiz-element automatic-row-size" name="title" rows="1" placeholder="Tytuł quizu..." autocomplete="off" maxlength="100"></textarea>
             </fieldset>
             <fieldset class="quiz-info add-margin-bottom">
                 <legend>Poziom trudności</legend>
                 <div class="difficulty">
-                    <input autocomplete="off" type="radio" id="difficulty-easy" class="difficulty-radio" name="difficulty" value="easy"<%= (quizInfo.difficulty === "easy") ? " checked" : "" %>>
+                    <input autocomplete="off" type="radio" id="difficulty-easy" class="difficulty-radio" name="difficulty" value="easy">
                     <label for="difficulty-easy" class="label-diff easy">Łatwy</label>
 
-                    <input autocomplete="off" type="radio" id="difficulty-medium" class="difficulty-radio" name="difficulty" value="medium"<%= (quizInfo.difficulty === "medium") ? " checked" : "" %>>
+                    <input autocomplete="off" type="radio" id="difficulty-medium" class="difficulty-radio" name="difficulty" value="medium" checked>
                     <label for="difficulty-medium" class="label-diff medium">Średni</label>
 
-                    <input autocomplete="off" type="radio" id="difficulty-hard" class="difficulty-radio" name="difficulty" value="hard"<%= (quizInfo.difficulty === "hard") ? " checked" : "" %>>
+                    <input autocomplete="off" type="radio" id="difficulty-hard" class="difficulty-radio" name="difficulty" value="hard">
                     <label for="difficulty-hard" class="label-diff hard">Trudny</label>
                 </div>
             </fieldset>
             <button class="question-new quiz-info" type="button">― Dodaj kolejne pytanie ―</button>
-            <% let numerOfQuestion = 0; %>
-            <% for(let question of allQuestions){ numerOfQuestion++; %>
             <fieldset class="question quiz-info">
-                <legend>Pytanie nr <span class="question-nr"><%= numerOfQuestion %></span></legend>
+                <legend>Pytanie nr <span class="question-nr"></span></legend>
                 <section class="question-info">
-                    <textarea required class="question-title quiz-title quiz-element automatic-row-size" rows="1" name="questions[<%= numerOfQuestion-1 %>][question]" placeholder="<%= question.question %>" autocomplete="off" maxlength="500"><%= question.question %></textarea>
+                    <textarea required class="question-title quiz-title quiz-element automatic-row-size" rows="1" name="question-nr" placeholder="Treść pytania..." autocomplete="off" maxlength="500"></textarea>
                     <section class="answers">
                         <fieldset class="quiz-answer answer-a wrong-answer">
                             <legend class="legend-right">Poprawna odpowiedź</legend>
                             <legend class="legend-wrong">Zła odpowiedź</legend>
-                            <textarea required class="quiz-answer-abcd quiz-element automatic-row-size" rows="1" name="questions[<%= numerOfQuestion-1 %>][a]" placeholder="<%= question.answerA %>" autocomplete="off" maxlength="200"><%= question.answerA %></textarea>
+                            <textarea required class="quiz-answer-abcd quiz-element automatic-row-size" rows="1" name="answer-a-nr" placeholder="Odpowiedź A" autocomplete="off" maxlength="200"></textarea>
                         </fieldset>
                         <fieldset class="quiz-answer answer-b wrong-answer">
                             <legend class="legend-right">Poprawna odpowiedź</legend>
                             <legend class="legend-wrong">Zła odpowiedź</legend>
-                            <textarea required class="quiz-answer-abcd quiz-element automatic-row-size" rows="1" name="questions[<%= numerOfQuestion-1 %>][b]" placeholder="<%= question.answerB %>" autocomplete="off" maxlength="200"><%= question.answerB %></textarea>
+                            <textarea required class="quiz-answer-abcd quiz-element automatic-row-size" rows="1" name="answer-b-nr" placeholder="Odpowiedź B" autocomplete="off" maxlength="200"></textarea>
                         </fieldset>
                         <fieldset class="quiz-answer answer-c wrong-answer">
                             <legend class="legend-right">Poprawna odpowiedź</legend>
                             <legend class="legend-wrong">Zła odpowiedź</legend>
-                            <textarea required class="quiz-answer-abcd quiz-element automatic-row-size" rows="1" name="questions[<%= numerOfQuestion-1 %>][c]" placeholder="<%= question.answerC %>" autocomplete="off" maxlength="200"><%= question.answerC %></textarea>
+                            <textarea required class="quiz-answer-abcd quiz-element automatic-row-size" rows="1" name="answer-c-nr" placeholder="Odpowiedź C" autocomplete="off" maxlength="200"></textarea>
                         </fieldset>
                         <fieldset class="quiz-answer answer-d wrong-answer">
                             <legend class="legend-right">Poprawna odpowiedź</legend>
                             <legend class="legend-wrong">Zła odpowiedź</legend>
-                            <textarea required class="quiz-answer-abcd quiz-element automatic-row-size" rows="1" name="questions[<%= numerOfQuestion-1 %>][d]" placeholder="<%= question.answerD %>" autocomplete="off" maxlength="200"><%= question.answerD %></textarea>
+                            <textarea required class="quiz-answer-abcd quiz-element automatic-row-size" rows="1" name="answer-d-nr" placeholder="Odpowiedź D" autocomplete="off" maxlength="200"></textarea>
                         </fieldset>
                     </section>
                     <div class="select-right-answer">
                         <span>Która odpowiedź jest poprawna?</span>
                         <div class="abcd">
                             <label>
-                                <input autocomplete="off" type="radio" class="right-answer-radio answer-a-right" name="questions[<%= numerOfQuestion-1 %>][correct]" value="a"<%= (question.correctAnswer == 'a') ? " checked" : "" %>>A
+                                <input autocomplete="off" type="radio" class="right-answer-radio answer-a-right" name="right-answer-nr" value="a" checked>A
                             </label>
                             
                             <label>
-                                <input autocomplete="off" type="radio" class="right-answer-radio answer-b-right" name="questions[<%= numerOfQuestion-1 %>][correct]" value="b"<%= (question.correctAnswer == 'b') ? " checked" : "" %>>B
+                                <input autocomplete="off" type="radio" class="right-answer-radio answer-b-right" name="right-answer-nr" value="b">B
                             </label>
 
                             <label>
-                                <input autocomplete="off" type="radio" class="right-answer-radio answer-c-right" name="questions[<%= numerOfQuestion-1 %>][correct]" value="c"<%= (question.correctAnswer == 'c') ? " checked" : "" %>>C
+                                <input autocomplete="off" type="radio" class="right-answer-radio answer-c-right" name="right-answer-nr" value="c">C
                             </label>
 
                             <label>
-                                <input autocomplete="off" type="radio" class="right-answer-radio answer-d-right" name="questions[<%= numerOfQuestion-1 %>][correct]" value="d"<%= (question.correctAnswer == 'd') ? " checked" : "" %>>D
+                                <input autocomplete="off" type="radio" class="right-answer-radio answer-d-right" name="right-answer-nr" value="d">D
                             </label>
                         </div>
                     </div>
@@ -141,10 +139,9 @@
                     </button>
                 </section>
             </fieldset>
-            <button class="question-new" type="button">― Dodaj kolejne pytanie ―</button>
-            <% } %>
+            <button class="question-new quiz-info" type="button">― Dodaj kolejne pytanie ―</button>
 
-            <button class="question-new save" type="submit">Zapisz i wyjdź</button>
+            <button class="question-new save" type="submit">Dodaj quiz</button>
             </form>
 
             <fieldset id="question-template" style="display: none;" class="question quiz-info">

@@ -1,6 +1,27 @@
 // Funkcje odpowiedzialne za aktualizacje elementów na stronie
 document.addEventListener('DOMContentLoaded', () => {
 
+  // Overlay - ukrycie i pokazanie
+  const overlay = document.getElementById('overlay-confirm');
+  const buttonExitEdit = document.getElementById('button-exit-edit');
+  const buttonContinueEdit = document.getElementById('button-continue-edit');
+
+  overlay.addEventListener('click', (element) => {
+    if(element.target === overlay){
+      overlay.classList.add('hidden');
+    }
+  });
+
+  buttonExitEdit.addEventListener('click', (element) => {
+    element.preventDefault();
+    overlay.classList.remove('hidden');
+  });
+
+  buttonContinueEdit.addEventListener('click', (element) => {
+    overlay.classList.add('hidden');
+  });
+
+
   // Podłączenie listnera na input do elementu - automatycznie poszerzanie wysokości
   function attachAutomaticRowSize(element){
     element.addEventListener('input', function(){
@@ -24,8 +45,66 @@ document.addEventListener('DOMContentLoaded', () => {
       addQuestion(element.target);
     }
 
-    // Usuwanie jednego z pytań
-    if(element.target && element.target.classList.contains('delete')){
+    // Reset przycisków usunięcia pytań na stronie - klinięcie w inne miejsce
+    if(!element.target.closest('.delete.step-2')){
+      document.querySelectorAll('.delete.step-2').forEach(button => {
+
+        // Resetowanie intervalu jeśli ustawiony
+        if(button.dataset.timerID){
+          clearInterval(button.dataset.timerID);
+          delete button.dataset.timerID;
+        }
+
+        // Resetowanie tekstu jesli ustawione
+        if(button.dataset.originalText){
+          const span = button.querySelector('span');
+          if(span) span.innerHTML = button.dataset.originalText;
+          delete button.dataset.originalText;
+        }
+
+        // Czyszczenie samego elementu
+        button.classList.add('hidden');
+        button.disabled = false;
+
+      });
+      document.querySelectorAll('.delete.step-1').forEach(button => button.classList.remove('hidden'));
+    }
+
+    // Pierwsze kliknięcie w przycisk usunięcia
+    if(element.target.closest('.delete.step-1')){
+      const buttonStep1 = element.target.closest('.delete.step-1');
+      const buttonStep2 = buttonStep1.nextElementSibling;
+
+      if(buttonStep2 && buttonStep2.classList.contains('step-2')){
+        buttonStep1.classList.add('hidden');
+        buttonStep2.classList.remove('hidden');
+
+        // Odliczanie do pojawienia się przycisku
+        let timeLeft = 2000;
+        const span = buttonStep2.querySelector('span');
+        const text = span.innerHTML;
+
+        buttonStep2.disabled = true;
+        span.textContent = `Poczekaj\n${(timeLeft/1000).toFixed(1)}s`;
+
+        const interval = setInterval(() => {
+          timeLeft -=100;
+          if(timeLeft > 0){
+            span.textContent = `Poczekaj\n${(timeLeft/1000).toFixed(1)}s`;
+          }else{
+            clearInterval(interval);
+            buttonStep2.disabled = false;
+            span.innerHTML = text;
+          }
+        }, 100);
+
+        buttonStep2.dataset.timerID = interval;
+        buttonStep2.dataset.originalText = text;
+      }
+    }
+
+    // Kliknięcie w potwierdzenie usunięcia
+    if(element.target.closest('.delete.step-2')){
       const question = element.target.closest('.question');
       const buttonAfter = question.nextElementSibling;
 
@@ -148,15 +227,32 @@ document.addEventListener('DOMContentLoaded', () => {
       // Wyłączenie niepotrzebnych przycisków przesunięcia
       const buttonUp = questionElement.querySelector('.move-up');
       const buttonDown = questionElement.querySelector('.move-down');
-      console.log(buttonUp, buttonDown, "-----------------");
+
+      buttonUp.disabled = false;
+      buttonDown.disabled = false;
+
       if(index === 0){
         buttonUp.disabled = true;
-      }else if(index === allQuestions.length - 1){
-        buttonDown.disabled = true;
-      }else{
-        buttonUp.disabled = false;
-        buttonDown.disabled = false;
       }
+      if(index === allQuestions.length - 1){
+        buttonDown.disabled = true;
+      }
+
+      // Blokada przycisku usunięcia, jeżeli jest tylko jedno pytania
+      const deleteButtons  = questionElement.querySelectorAll('.delete');
+
+      deleteButtons.forEach(button => {
+        button.disabled = false;
+        button.style.cursor = "";
+      });
+
+      if(allQuestions.length === 1){
+        deleteButtons.forEach(button => {
+          button.disabled = true;
+          button.style.cursor = "default";
+        });
+      }
+
 
     });
 

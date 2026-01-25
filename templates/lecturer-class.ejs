@@ -58,10 +58,12 @@
             <span><%= classInfo.description %></span><br/>
             <span><%= classInfo.title + " " + classInfo.firstName + " " + classInfo.lastName %></span>
             <div class="class-options">
-                <button class="add-quiz">
-                    <img class="icon" src="/img/icons/add.png" alt="">
-                    <span>Dodaj nowy quiz</span> 
-                </button>
+                <a class="new-quiz-link" href="./<%= classInfo.id %>/new_quiz">
+                    <button class="add-quiz">
+                        <img class="icon" src="/img/icons/add.png" alt="">
+                        <span>Dodaj nowy quiz</span> 
+                    </button>
+                </a>
                 <button class="edit-users">
                     <img class="icon" src="/img/icons/edit.png" alt="">
                     <span>Edytuj listę użytkowników</span> 
