@@ -89,7 +89,7 @@ router.get('/lecturer/class/:classID/quiz/:quizID/edit', async(req, res) => {
             quizID
         );
 
-        console.log(quizData[0]);
+        //console.log(quizData[0]);
 
 
         // if(req.session.quizes[quizID] === undefined){
@@ -109,7 +109,8 @@ router.get('/lecturer/class/:classID/quiz/:quizID/edit', async(req, res) => {
         res.render('lecturer-quiz.ejs',{
             userInfo: userData[0],
             classInfo: classData[0],
-            quizInfo: quizData[0]
+            quizInfo: quizData[0],
+            allQuestions: quizQuestions
             //quizInfo: quizData[0],
             //question: questionsData[0],
             //sessionDetails: req.session.quizes[quizID]

@@ -48,6 +48,7 @@ app.get('/lecturer/class/:classID/quiz/:quizID/edit', quiz_route);
 app.post('/class', class_api);
 app.post('/quiz', quiz_api);
 app.post('/edit-quiz', quiz_api);
+app.post('/quiz-edit/:quizID', quiz_api);
 app.post('/check-answer/:quizID', checkAnswer_api);
 
 app.get('/login', loginLogout_api);

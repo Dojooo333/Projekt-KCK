@@ -107,8 +107,6 @@ h2{
 .class-info span{
     font-size: 20px;
 }
-/* #EC8F59 orange
-#E46962 red */
 @media screen and (width < 1600px){
 
 }
@@ -223,6 +221,9 @@ h2{
 .add-margin-top{
     margin-top: 50px;
 }
+.add-margin-bottom{
+    margin-bottom: 64px;
+}
 
 
 .answers{
@@ -240,10 +241,9 @@ h2{
 .answers .quiz-answer{
     flex: 40%;
     text-align: left;
-    /* border: 2px solid #76C0D1; */
     border-radius: 16px;
     padding: 13px;
-    transition: all 0.3s ease-in;
+    transition: all 0.1s ease-in;
     margin: 0;
 }
 .answers .quiz-answer textarea{
@@ -251,19 +251,11 @@ h2{
 }
 .quiz-answer.right-answer{
     border: 2px solid rgba(121, 192, 116, 0.4);
-    background-color: rgba(121, 192, 116, 0.05);
+    background-color: rgba(121, 192, 116, 0.2);
 }
 .quiz-answer.wrong-answer{
     border: 2px solid rgba(228, 105, 98, 0.4);
     background-color: rgba(228, 105, 98, 0.05);
-}
-.quiz-answer:focus-within.right-answer{
-    border: 2px solid rgba(121, 192, 116, 0.8);
-    background-color: rgba(121, 192, 116, 0.2);
-}
-.quiz-answer:focus-within.wrong-answer{
-    border: 2px solid rgba(228, 105, 98, 0.8);
-    background-color: rgba(228, 105, 98, 0.2);
 }
 
 .quiz-answer.right-answer .legend-wrong{
@@ -311,10 +303,6 @@ h2{
     transition: all 0.3s ease-out;
     cursor: pointer;
     font-size: 20px;
-}
-
-
-.abcd label{
     border: 2px solid rgba(78, 185, 126, 0.2);
     background-color: rgba(78, 185, 126, 0.05);
 }
@@ -382,4 +370,112 @@ h2{
 }
 .quiz-info:has(input[value="d"]:checked) .answer-d .legend-right{
     display: block;
+}
+
+
+
+
+.question-new{
+    width: 100%;
+    background-color: transparent;
+    border: 2px solid transparent;
+    font-size: 18px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 34px;
+    border-radius: 23px;
+}
+.question-new:hover{
+    border: 2px solid rgb(58, 106, 116);
+}
+
+.save{
+    border-radius: 23px;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 54px;
+    box-sizing: border-box;
+    width: 100%;
+    transition: all 0.3s ease-out;
+    cursor: pointer;
+    font-size: 20px;
+    border: 2px solid rgba(78, 185, 126, 0.2);
+    background-color: rgba(78, 185, 126, 0.05);
+    margin-top: 64px;
+}
+.save:hover{
+    background-color: rgba(78, 185, 126, 0.4);
+}
+
+.question{
+    display: flex;
+}
+
+.question-buttons{
+    margin-left: 26px;
+    border-left: 2px solid #76C0D1;
+    padding-left: 26px;
+    gap: 26px;
+    display: flex;
+    flex-direction: column;
+}
+.question-info{
+    flex-grow: 1;
+}
+
+.question-option{
+    height: 100%;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-direction: column;
+    width: 100%;
+    padding: 0px 16px;
+    cursor: pointer;
+    border-radius: 13px;
+    transition: all 0.3s ease-out;
+}
+.move-up, .move-down{
+    border: 2px solid rgba(0, 33, 50, 0.2);
+    background-color: rgba(0, 33, 50, 0.05);
+}
+.move-up:hover, .move-down:hover{
+    border: 2px solid rgba(0, 33, 50, 0.4);
+    background-color: rgba(0, 33, 50, 0.15);
+}
+
+.move-up:disabled, .move-down:disabled{
+    border: 2px solid rgba(0, 33, 50, 0.1);
+    background-color: rgba(0, 33, 50, 0.01);
+    color: rgb(201, 201, 201);
+    cursor: default;
+}
+
+.move-up:disabled img, .move-down:disabled img{
+    opacity: 0.1;
+}
+
+.delete{
+    border: 2px solid rgba(228, 105, 98, 0.2);
+    background-color: rgba(228, 105, 98, 0.05);
+}
+.delete:hover{
+    border: 2px solid rgba(228, 105, 98, 0.4);
+    background-color: rgba(228, 105, 98, 0.15);
+}
+
+.question-option img{
+    width: 24px;
+    height: 24px;
 }
