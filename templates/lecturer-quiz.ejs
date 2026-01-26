@@ -144,7 +144,10 @@
             <button class="question-new" type="button">― Dodaj kolejne pytanie ―</button>
             <% } %>
 
-            <button class="question-new save" type="submit">Zapisz i wyjdź</button>
+            <section class="quiz-buttons">
+                <button id="button-delete-quiz" class="delete-quiz" type="button">Usuń ten quiz</button>
+                <button class="save" type="submit">Zapisz i wyjdź</button>
+            </section>
             </form>
 
             <fieldset id="question-template" style="display: none;" class="question quiz-info">
@@ -230,6 +233,24 @@
             <div id="button-continue-edit" class="back">
                 <span>Kontynuuj edycję.</span>
                 <img class="img-next" src="/img/icons/next.png" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div id="overlay-delete" class="overlay hidden">
+        <div class="overlay-content">
+            <img class="img-status" src="/img/icons/incorrect.png" alt="">
+            <h1 id="question-result">Czy na pewno chcesz usunąć ten quiz?</h1>
+            <h2>Tej operacji nie da się cofnąć!</h2>
+            <form action="/delete-quiz/<%= quizInfo.id %>" method="POST">
+                <button type="submit" class="quit">
+                    <img class="img-back" src="/img/icons/delete-red.png" alt="">
+                    <span>Tak, chce usunąć ten quiz</span>
+                </button>
+            </form>
+            <div id="button-delete-cancel" class="back">
+                <img class="img-back" src="/img/icons/cancel.png" alt="">
+                <span>Pozostaw ten quiz</span>
             </div>
         </div>
     </div>

@@ -32,7 +32,14 @@ router.get('/student/class/:classID/quiz/:quizID', async(req, res) => {
         if(req.session.quizes[quizID] === undefined){
             req.session.quizes[quizID] = {
                 currentQuestion: 0,
-                allQuestions: quizData[0].questionsCount
+                allQuestions: quizData[0].questionsCount,
+                lifelines: {
+                    fiftyFifty: false,
+                    audience: false,
+                    hint: false
+                },
+                startedDate: new Date(),
+                finishedDate: null
             }
         }
         

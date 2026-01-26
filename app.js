@@ -52,6 +52,7 @@ app.post('/edit-quiz', quiz_api);
 app.post('/quiz-edit/:quizID', quiz_api);
 app.post('/check-answer/:quizID', checkAnswer_api);
 app.post('/add-quiz/:classID', quiz_api);
+app.post('/delete-quiz/:quizID', quiz_api);
 
 app.get('/login', loginLogout_api);
 app.post('/login', loginLogout_api);

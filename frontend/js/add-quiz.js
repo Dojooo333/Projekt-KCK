@@ -21,28 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
     overlayConfirm.classList.add('hidden');
   });
 
-
-  // Usunięcie quizu
-  const overlayDelete = document.getElementById('overlay-delete');
-  const buttonDelete = document.getElementById('button-delete-quiz');
-  const buttonDeleteCancel = document.getElementById('button-delete-cancel');
-
-  overlayDelete.addEventListener('click', (element) => {
-    if(element.target === overlayDelete){
-      overlayDelete.classList.add('hidden');
-    }
-  });
-
-  buttonDelete.addEventListener('click', (element) => {
-    element.preventDefault();
-    overlayDelete.classList.remove('hidden');
-  });
-
-  buttonDeleteCancel.addEventListener('click', (element) => {
-    overlayDelete.classList.add('hidden');
-  });
-
-
   // Podłączenie listnera na input do elementu - automatycznie poszerzanie wysokości
   function attachAutomaticRowSize(element){
     element.addEventListener('input', function(){

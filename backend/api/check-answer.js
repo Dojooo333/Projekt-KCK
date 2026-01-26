@@ -26,21 +26,44 @@ router.post('/check-answer/:quizID', async(req, res) => {
             [quizID,(req.session.quizes[quizID].currentQuestion+1)]
         );
 
+        const saveGameResult = async (isWin) => {
+            await pool.query(
+                'insert into games (quizID, userID, startedDate, finishedDate, result, correctQuestions) values (?, ?, ?, NOW(), ?, ?);',
+                [
+                    quizID,
+                    userData[0].id,
+                    new Date(req.session.quizes[quizID].startedDate),
+                    isWin ? 1 : 0,
+                    req.session.quizes[quizID].currentQuestion
+                ]
+            );
+        };
+
         if(correct[0].correctAnswer === req.body['answer']){
             req.session.quizes[quizID].currentQuestion += 1;
             if(req.session.quizes[quizID].currentQuestion === req.session.quizes[quizID].allQuestions){
+
+                // Wygrana
+                await saveGameResult(true);
                 delete req.session.quizes[quizID];
                 res.json({
                     correct: true,
                     finished: true
                 });
+
             }else{
+
+                // Poprawne pytanie
                 res.json({
                     correct: true,
                     finished: false
                 });
+
             }
         }else{
+
+            // Przegrana
+            await saveGameResult(false);
             delete req.session.quizes[quizID];
             res.json({
                 correct: false,

@@ -132,6 +132,9 @@ router.post('/quiz-edit/:quizID', async(req, res) => {
                 [newQuizData.title, newQuizData.difficulty, newQuizData.questions.length, quizID]
             );
 
+            // Usunięcie danych z tabeli games
+            await connection.query('delete from games where quizID = ?;', quizID);
+
             // Usunięcie starych danych z tabeli questions
             await connection.query(
                 'delete from questions where quizID = ?;',
@@ -268,6 +271,59 @@ router.post('/add-quiz/:classID', async(req, res) => {
 
             return res.redirect(`/lecturer/class/${classID}`);
 
+
+        }catch(error){
+            await connection.rollback();
+            throw transactionError;
+        }
+
+    }catch(err){
+        return res.status(500).send('Error fatching data.');
+    }finally{
+        if(connection) connection.release();
+    }
+
+});
+
+
+router.post('/delete-quiz/:quizID', async(req, res) => {
+    
+    const login = req.session.username;
+    const quizID = req.params.quizID;
+
+    let connection;
+
+    try{
+
+        // Sprawdzanie, czy użytkownik przesyłający formularz jest twórcą przedmiotu
+        const [quizAuthor] = await pool.query(
+            "select q.id, q.classID, u.login from quizes q left join classes c on q.classID = c.id left join users u on c.creatorID = u.id where q.id = ?;",
+            quizID
+        );
+
+        if(login !== quizAuthor[0].login){
+            return res.send("Błąd! Nie masz uprawnień do usuwania quizów w tym przedmiocie.");
+        }
+
+        // Rozpoczęcie transakcji
+        connection = await pool.getConnection();
+        await connection.beginTransaction();
+
+        try{
+
+            // Usunięcie pytań quizu
+            await connection.query('delete from questions where quizID = ?;', quizID);
+
+            // Usunięcie gier
+            await connection.query('delete from games where quizID = ?;', quizID);
+
+            // Usunięcie quizu
+            await connection.query('delete from quizes where id = ?;', quizID);
+
+            // Zakończenie transakcji
+            await connection.commit();
+
+            return res.redirect(`/lecturer/class/${quizAuthor[0].classID}`);
 
         }catch(error){
             await connection.rollback();
