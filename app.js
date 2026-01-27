@@ -41,9 +41,11 @@ const loginLogout_api = require('./backend/api/login-logout.js');
 // Endpointy
 app.get('/', index_route);
 app.get('/student/class/:classID/quiz/:quizID', quiz_route);
+app.get('/student/class/:classID/quiz/:quizID/ranking', quiz_route);
 app.get('/student/class/:id', class_route);
 app.get('/lecturer/class/:id', class_route);
 app.get('/lecturer/class/:classID/quiz/:quizID/edit', quiz_route);
+app.get('/lecturer/class/:classID/quiz/:quizID/ranking', quiz_route);
 app.get('/lecturer/class/:classID/new_quiz', quiz_route);
 
 app.post('/class', class_api);

@@ -70,7 +70,6 @@
                 </button>
             </div>
         </section>
-        <form id="users-form" action="/edit-quiz" method="POST">
         <section class="quizes-list">
             <% for(let quiz of quizesList){ %>
             <div class="class-button <%= quiz.difficulty %>">
@@ -79,19 +78,22 @@
                     <span><%= (quiz.difficulty === 'hard') ? "Trudny" : ((quiz.difficulty === 'medium') ? "Średni" : "Łatwy") %> - <%= quiz.questionsCount %> pytań</span>
                 </div>
                 <div class="quiz-buttons">
-                    <button class="play" type="submit" name="quiz-id" value="<%= quiz.id %>">
-                        <img class="icon" src="/img/icons/edit.png" alt="">
-                        <span>Edytuj</span> 
-                    </button>
-                    <button class="ranking">
-                        <img class="icon" src="/img/icons/ranking.png" alt="">
-                        <span>Ranking</span> 
-                    </button> 
+                    <form id="users-form" action="/edit-quiz" method="POST">
+                        <button class="play" type="submit" name="quiz-id" value="<%= quiz.id %>">
+                            <img class="icon" src="/img/icons/play.png" alt="">
+                            <span><%= (usersSession[quiz.id] === undefined) ? "Rozpocznij" : "Kontynuuj" %></span> 
+                        </button>
+                    </form>
+                    <a href="/lecturer/class/<%= classInfo.id %>/quiz/<%= quiz.id %>/ranking">
+                        <button class="ranking">
+                            <img class="icon" src="/img/icons/ranking.png" alt="">
+                            <span>Ranking</span> 
+                        </button> 
+                    </a>
                 </div>
             </div>
             <% } %>
         </section>
-        </form>
     </main>
 
     <footer></footer>

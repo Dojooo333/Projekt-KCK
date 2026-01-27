@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/class.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kurale&display=swap" rel="stylesheet">
+
+    <script src="/js/navbar.js"></script>
+</head>
+<body>
+    
+    <nav class="navbar">
+        <!-- LEWA STRONA -->
+        <div class="nav-section left">
+            <a href='/' class="nav-button" role="button">
+                <img class="icon" src="/img/icons/undo.png" alt="">
+                <span>Powrót do listy quizów</span> 
+            </a>
+        </div>
+
+        <!-- ŚRODEK -->
+        <div class="nav-logo">QUIZ PŁ</div>
+
+        <!-- PRAWA STRONA -->
+        <div id="user" class="nav-section right"> <!--show-logout-->
+            <div class="nav-button" role="button">
+                <div>
+                    <span class="logged-as">Zalogowano jako:</span><br/>
+                    <% if(userInfo.isLecturer === 1){ %>
+                        <span class="logged-user"><%= userInfo.title + " " + userInfo.firstName + " " + userInfo.lastName %></span>
+                    <% }else{ %>
+                        <span class="logged-user"><%= userInfo.firstName + " " + userInfo.lastName %> (<%= userInfo.login %>)</span>
+                    <% } %>
+                </div>
+                <img class="profile-img" src="/img/profile-image/<%= userInfo.imgName%>">
+            </div>
+
+            <div class="logout-popup">
+                <form action="/logout" method="GET">
+                    <span>Czy chcesz się wylogować?</span>
+                    <button type="submit" class="button-confirm">TAK</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section class="class-info">
+            <h2><%= quizInfo.title %></h2>
+            <span><%= (quizInfo.difficulty === 'hard') ? "Trudny" : ((quizInfo.difficulty === 'medium') ? "Średni" : "Łatwy") %> - Liczba pytań: <%= quizInfo.questionsCount %></span>
+        </section>
+        <h2 class="center-h2">Ranking</h2>
+        <section class="ranking-list">
+            
+            <div class="nothing-here">Pusto... Nikt jeszcze nie grał w ten quiz.</div>
+            <div class="user-ranking first-place">
+                <img class="place-nr" src="/img/icons/award.png" alt="">
+                <span class="place-user">Piotr Wójcik (250012)</span>
+                <span class="place-questions">10 z 10 pytań</span>
+                <span class="place-time">24 sekundy</span>
+            </div>
+            <div class="user-ranking second-place">
+                <img class="place-nr" src="/img/icons/trophy.png" alt="">
+                <span class="place-user">Piotr Wójcik (250012)</span>
+                <span class="place-questions">10 z 10 pytań</span>
+                <span class="place-time">24 sekundy</span>
+            </div>
+            <div class="user-ranking third-place">
+                <img class="place-nr" src="/img/icons/medal.png" alt="">
+                <span class="place-user">Piotr Wójcik (250012)</span>
+                <span class="place-questions">10 z 10 pytań</span>
+                <span class="place-time">24 sekundy</span>
+            </div>
+            <div class="user-ranking other-place">
+                <span class="place-nr" >4</span>
+                <span class="place-user">Piotr Wójcik (250012)</span>
+                <span class="place-questions">10 z 10 pytań</span>
+                <span class="place-time">24 sekundy</span>
+            </div>
+            <div class="user-ranking other-place">
+                <span class="place-nr" >5</span>
+                <span class="place-user">Piotr Wójcik (250012)</span>
+                <span class="place-questions">10 z 10 pytań</span>
+                <span class="place-time">24 sekundy</span>
+            </div>
+        </section>
+        <h2 class="center-h2 lastgames">Twoje ostatnie 20 gier</h2>
+        <section class="lastgames-list">
+            <div class="lastgame lose">
+                <span class="lastgame-finished">2 Gru 2026 - 14:34:24</span>
+                <span class="lastgame-questions">10 z 10 pytań</span>
+                <span class="lastgame-time">24 sekundy</span>
+            </div>
+            <div class="lastgame win">
+                <span class="lastgame-finished">2 Gru 2026 - 14:34:24</span>
+                <span class="lastgame-questions">10 z 10 pytań</span>
+                <span class="lastgame-time">24 sekundy</span>
+            </div>
+            <div class="lastgame win">
+                <span class="lastgame-finished">2 Gru 2026 - 14:34:24</span>
+                <span class="lastgame-questions">10 z 10 pytań</span>
+                <span class="lastgame-time">24 sekundy</span>
+            </div>
+            <div class="lastgame win">
+                <span class="lastgame-finished">2 Gru 2026 - 14:34:24</span>
+                <span class="lastgame-questions">10 z 10 pytań</span>
+                <span class="lastgame-time">24 sekundy</span>
+            </div>
+            <div class="lastgame lose">
+                <span class="lastgame-finished">2 Gru 2026 - 14:34:24</span>
+                <span class="lastgame-questions">10 z 10 pytań</span>
+                <span class="lastgame-time">24 sekundy</span>
+            </div>
+            <div class="lastgame lose">
+                <span class="lastgame-finished">2 Gru 2026 - 14:34:24</span>
+                <span class="lastgame-questions">10 z 10 pytań</span>
+                <span class="lastgame-time">24 sekundy</span>
+            </div>
+        </section>
+            <!-- <section class="quizes-list">
+                <% //for(let quiz of quizesList){ %>
+                <div class="class-button <%= // quiz.difficulty %>">
+                    <div class="quiz-title">
+                        <h3><%= // quiz.title %></h3>
+                        <span><%= // (quiz.difficulty === 'hard') ? "Trudny" : ((quiz.difficulty === 'medium') ? "Średni" : "Łatwy") %> - <%= //quiz.questionsCount %> pytań</span>
+                    </div>
+                    <div class="quiz-buttons">
+                        <form id="users-form" action="/quiz" method="POST">
+                            <button class="play" type="submit" name="quiz-id" value="<%= //quiz.id %>">
+                                <img class="icon" src="/img/icons/play.png" alt="">
+                                <span><%= //(usersSession[quiz.id] === undefined) ? "Rozpocznij" : "Kontynuuj" %></span> 
+                            </button>
+                        </form>
+                        <a href="/student/class/<%= ////classInfo.id %>/quiz/<%= //quiz.id %>/ranking">
+                            <button class="ranking">
+                                <img class="icon" src="/img/icons/ranking.png" alt="">
+                                <span>Ranking</span> 
+                            </button> 
+                        </a>
+                    </div>
+                </div>
+                <% // } %>
+            </section> -->
+    </main>
+
+    <footer></footer>
+</body>
+</html>
