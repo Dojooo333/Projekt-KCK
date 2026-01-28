@@ -53,21 +53,23 @@
     </nav>
 
     <main>
+        <form id="help-form" action="/help/<%= quizInfo.id %>" method="POST">
         <section class="quiz-info">
             <div class="question-nr">
                 <span>Pytanie <span id="current-question-nr"><%= (sessionDetails.currentQuestion + 1) %></span> z <span id="all-questions-nr"><%= quizInfo.questionsCount %></span>
                 </span>
             </div>
-            <button id="help5050" class="help" disabled>
-                <span>50 / 50</span>
-            </button>
-            <button id="helpExpert" class="help" disabled>
-                <img class="help-img" src="/img/icons/phone.png">
-            </button>
-            <button id="helpPublic" class="help" disabled>
-                <img class="help-img" src="/img/icons/bar-chart.png">
-            </button>
+                <button id="help5050" class="help" type="submit"<%= (sessionDetails.lifelines.fiftyFifty === true) ? "disabled" : "" %>>
+                    <span>50 / 50</span>
+                </button>
+                <button id="helpExpert" class="help" type="submit"<%= (sessionDetails.lifelines.hint === true) ? "disabled" : "" %>>
+                    <img class="help-img" src="/img/icons/phone.png">
+                </button>
+                <button id="helpPublic" class="help" type="submit"<%= (sessionDetails.lifelines.audience === true) ? "disabled" : "" %>>
+                    <img class="help-img" src="/img/icons/bar-chart.png">
+                </button>
         </section>
+        </form>
         <section class="question"><%= question.question %></section>
         <form id="send-answer" action="/check-answer/<%= quizInfo.id %>" method="POST">
             <section class="answers">
@@ -86,6 +88,53 @@
             </section>
         </form>
     </main>
+
+    <div id="overlay-helpExpert" class="overlay hidden">
+        <div class="overlay-content">
+            <img class="img-status" src="/img/icons/phone.png" alt="">
+            <h1 id="question-result">Dzwoni telefon...</h1>
+            <h2 id="helpExpert-text">Poprawna odpowiedź!</h2>
+            <button id="overlay-helpExpert-button">
+                <span>Ok!</span>
+            </button>
+        </div>
+    </div>
+
+    <div id="overlay-helpPublic" class="overlay hidden">
+        <div class="overlay-content">
+            <img class="img-status" src="/img/icons/bar-chart.png" alt="">
+            <h1 id="question-result">Liczenie głosów...</h1>
+            <div id="audience">
+                <div id="charts">
+                    <div id="chart-answer-A"></div>
+                    <div id="chart-answer-B"></div>
+                    <div id="chart-answer-C"></div>
+                    <div id="chart-answer-D"></div>
+                </div>
+                <div id="percentages">
+                    <div id="chart-percentage-A">
+                        <span class="chart-answer">A</span>
+                        <span id="chart-percentage-A-text" class="chart-percentage">12</span>
+                    </div>
+                    <div id="chart-percentage-B">
+                        <span class="chart-answer">B</span>
+                        <span id="chart-percentage-B-text" class="chart-percentage">12</span>
+                    </div>
+                    <div id="chart-percentage-C">
+                        <span class="chart-answer">C</span>
+                        <span id="chart-percentage-C-text" class="chart-percentage">12</span>
+                    </div>
+                    <div id="chart-percentage-D">
+                        <span class="chart-answer">D</span>
+                        <span id="chart-percentage-D-text" class="chart-percentage">12</span>
+                    </div>
+                </div>
+            </div>
+            <button id="overlay-helpPublic-button">
+                <span>Ok!</span>
+            </button>
+        </div>
+    </div>
 
     <div id="overlay-correct" class="overlay hidden">
         <div class="overlay-content">

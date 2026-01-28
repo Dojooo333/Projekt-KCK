@@ -58,97 +58,82 @@
             <span><%= (quizInfo.difficulty === 'hard') ? "Trudny" : ((quizInfo.difficulty === 'medium') ? "Średni" : "Łatwy") %> - Liczba pytań: <%= quizInfo.questionsCount %></span>
         </section>
         <h2 class="center-h2">Ranking</h2>
-        <section class="ranking-list">
-            
-            <div class="nothing-here">Pusto... Nikt jeszcze nie grał w ten quiz.</div>
-            <div class="user-ranking first-place">
-                <img class="place-nr" src="/img/icons/award.png" alt="">
-                <span class="place-user">Piotr Wójcik (250012)</span>
-                <span class="place-questions">10 z 10 pytań</span>
-                <span class="place-time">24 sekundy</span>
-            </div>
-            <div class="user-ranking second-place">
-                <img class="place-nr" src="/img/icons/trophy.png" alt="">
-                <span class="place-user">Piotr Wójcik (250012)</span>
-                <span class="place-questions">10 z 10 pytań</span>
-                <span class="place-time">24 sekundy</span>
-            </div>
-            <div class="user-ranking third-place">
-                <img class="place-nr" src="/img/icons/medal.png" alt="">
-                <span class="place-user">Piotr Wójcik (250012)</span>
-                <span class="place-questions">10 z 10 pytań</span>
-                <span class="place-time">24 sekundy</span>
-            </div>
-            <div class="user-ranking other-place">
-                <span class="place-nr" >4</span>
-                <span class="place-user">Piotr Wójcik (250012)</span>
-                <span class="place-questions">10 z 10 pytań</span>
-                <span class="place-time">24 sekundy</span>
-            </div>
-            <div class="user-ranking other-place">
-                <span class="place-nr" >5</span>
-                <span class="place-user">Piotr Wójcik (250012)</span>
-                <span class="place-questions">10 z 10 pytań</span>
-                <span class="place-time">24 sekundy</span>
-            </div>
-        </section>
-        <h2 class="center-h2 lastgames">Twoje ostatnie 20 gier</h2>
-        <section class="lastgames-list">
-            <div class="lastgame lose">
-                <span class="lastgame-finished">2 Gru 2026 - 14:34:24</span>
-                <span class="lastgame-questions">10 z 10 pytań</span>
-                <span class="lastgame-time">24 sekundy</span>
-            </div>
-            <div class="lastgame win">
-                <span class="lastgame-finished">2 Gru 2026 - 14:34:24</span>
-                <span class="lastgame-questions">10 z 10 pytań</span>
-                <span class="lastgame-time">24 sekundy</span>
-            </div>
-            <div class="lastgame win">
-                <span class="lastgame-finished">2 Gru 2026 - 14:34:24</span>
-                <span class="lastgame-questions">10 z 10 pytań</span>
-                <span class="lastgame-time">24 sekundy</span>
-            </div>
-            <div class="lastgame win">
-                <span class="lastgame-finished">2 Gru 2026 - 14:34:24</span>
-                <span class="lastgame-questions">10 z 10 pytań</span>
-                <span class="lastgame-time">24 sekundy</span>
-            </div>
-            <div class="lastgame lose">
-                <span class="lastgame-finished">2 Gru 2026 - 14:34:24</span>
-                <span class="lastgame-questions">10 z 10 pytań</span>
-                <span class="lastgame-time">24 sekundy</span>
-            </div>
-            <div class="lastgame lose">
-                <span class="lastgame-finished">2 Gru 2026 - 14:34:24</span>
-                <span class="lastgame-questions">10 z 10 pytań</span>
-                <span class="lastgame-time">24 sekundy</span>
-            </div>
-        </section>
-            <!-- <section class="quizes-list">
-                <% //for(let quiz of quizesList){ %>
-                <div class="class-button <%= // quiz.difficulty %>">
-                    <div class="quiz-title">
-                        <h3><%= // quiz.title %></h3>
-                        <span><%= // (quiz.difficulty === 'hard') ? "Trudny" : ((quiz.difficulty === 'medium') ? "Średni" : "Łatwy") %> - <%= //quiz.questionsCount %> pytań</span>
+        <% if(ranking.length > 0){ %>
+            <section class="ranking-list">
+                <% for(let [index, rank] of ranking.entries()){ %>
+                    <% if(index === 0){ %>
+                        <div class="user-ranking first-place">
+                            <img class="place-nr" src="/img/icons/award.png" alt="">
+                    <% }else if(index === 1){ %>
+                        <div class="user-ranking second-place">
+                            <img class="place-nr" src="/img/icons/trophy.png" alt="">
+                    <% }else if(index === 2){ %>
+                        <div class="user-ranking third-place">
+                            <img class="place-nr" src="/img/icons/medal.png" alt="">
+                    <% }else{ %>
+                        <div class="user-ranking other-place">
+                            <span class="place-nr" ><%= index + 1 %></span>
+                    <% } %>
+                            <span class="place-user"><%= rank.firstName + " " + rank.lastName %> (<%= rank.login %>)</span>
+                            <span class="place-questions"><%= rank.correctQuestions %> z <%= quizInfo.questionsCount %> pytań</span>
+                            <% if(rank.durationSeconds < 60){ %>
+                                <span class="place-time"><%= rank.durationSeconds %>s</span>
+                            <% }else if(rank.durationSeconds < 600){ %>
+                                <% if(rank.durationSeconds % 60 === 0){ %>
+                                    <span class="place-time"><%= rank.durationSeconds / 60 %>min</span>
+                                <% }else{ %>
+                                    <span class="place-time"><%= Math.floor(rank.durationSeconds / 60) %>min <%= rank.durationSeconds - (60 * Math.floor(rank.durationSeconds / 60)) %>s</span>
+                                <% } %>
+                            <% }else{ %>
+                                <span class="place-time">&gt;10min</span>
+                            <% } %>
+                        </div>
+                <% } %>
+            </section>
+        <% }else{ %>
+            <section class="ranking-list">
+                <div class="nothing-here">Pusto... Nikt jeszcze nie grał w ten quiz.</div>
+            </section>
+        <% } %>
+        <% if(userInfo.isLecturer === 0 && lastgames.length > 0){ %>
+            <h2 class="center-h2 lastgames">Twoje ostatnie gry</h2>
+            <section class="lastgames-list">
+                <% for(let game of lastgames){ %>
+                    <div class="lastgame <%= game.result === 1 ? "win" : "lose" %>">
+                        <% 
+                            const date = new Date(game.finishedDate);
+
+                            const formatted = date.toLocaleString('pl-PL', {
+                                day: 'numeric',
+                                month: 'short',
+                                year: 'numeric',
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                second: '2-digit'
+                            }).replace(',', ' -');
+                        %>
+                        <span class="lastgame-finished"><%= formatted %></span>
+                        <span class="lastgame-questions"><%= game.correctQuestions %> z <%= quizInfo.questionsCount %> pytań</span>
+                        <% if(game.durationSeconds < 60){ %>
+                            <span class="lastgame-time"><%= game.durationSeconds %>s</span>
+                        <% }else if(game.durationSeconds < 600){ %>
+                            <% if(game.durationSeconds % 60 === 0){ %>
+                                <span class="lastgame-time"><%= game.durationSeconds / 60 %>min</span>
+                            <% }else{ %>
+                                <span class="lastgame-time"><%= Math.floor(game.durationSeconds / 60) %>min <%= game.durationSeconds - (60 * Math.floor(game.durationSeconds / 60)) %>s</span>
+                            <% } %>
+                        <% }else{ %>
+                            <span class="lastgame-time">&gt;10min</span>
+                        <% } %>
                     </div>
-                    <div class="quiz-buttons">
-                        <form id="users-form" action="/quiz" method="POST">
-                            <button class="play" type="submit" name="quiz-id" value="<%= //quiz.id %>">
-                                <img class="icon" src="/img/icons/play.png" alt="">
-                                <span><%= //(usersSession[quiz.id] === undefined) ? "Rozpocznij" : "Kontynuuj" %></span> 
-                            </button>
-                        </form>
-                        <a href="/student/class/<%= ////classInfo.id %>/quiz/<%= //quiz.id %>/ranking">
-                            <button class="ranking">
-                                <img class="icon" src="/img/icons/ranking.png" alt="">
-                                <span>Ranking</span> 
-                            </button> 
-                        </a>
-                    </div>
-                </div>
-                <% // } %>
-            </section> -->
+                <% } %>
+            </section>
+        <% }else if(userInfo.isLecturer === 0 ){ %>
+            <h2 class="center-h2 lastgames">Twoje ostatnie 20 gier</h2>
+            <section class="lastgames-list">
+                <div class="nothing-here">Pusto... Zagraj teraz!.</div>
+            </section>
+        <% } %>
     </main>
 
     <footer></footer>

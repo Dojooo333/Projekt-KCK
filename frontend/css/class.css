@@ -185,6 +185,7 @@ h3{
 a, a:active, a:hover, a:visited, a:link{
     text-decoration: none;
     color: rgb(0, 33, 50);
+    border: 0;
 }
 
 
@@ -206,17 +207,17 @@ a, a:active, a:hover, a:visited, a:link{
 .user-ranking.first-place{
     border: 2px solid #fed555;
     background: #FED555;
-    background: linear-gradient(90deg,rgba(254, 213, 85, 0.2) 0%, rgba(254, 213, 85, 0) 90%);
+    background: linear-gradient(90deg,rgba(254, 213, 85, 0.3) 0%, rgba(254, 213, 85, 0) 90%);
 }
 .user-ranking.second-place{
     border: 2px solid #a3a3a3;
     background: #A3A3A3;
-    background: linear-gradient(90deg,rgba(163, 163, 163, 0.2) 0%, rgba(163, 163, 163, 0) 90%);
+    background: linear-gradient(90deg,rgba(163, 163, 163, 0.3) 0%, rgba(163, 163, 163, 0) 90%);
 }
 .user-ranking.third-place{
     border: 2px solid #e3a87c;
     background: #E3A87C;
-    background: linear-gradient(90deg,rgba(227, 168, 124, 0.2) 0%, rgba(227, 168, 124, 0) 90%); 
+    background: linear-gradient(90deg,rgba(227, 168, 124, 0.3) 0%, rgba(227, 168, 124, 0) 90%); 
     margin-bottom: 40px;
 }
 .place-nr{
@@ -238,9 +239,15 @@ span.place-nr{
     margin-left: 20px;
     font-size: 32px;
 }
+.place-time{
+    min-width: 100px;
+    text-align: right;
+}
 .place-questions{
+    min-width: 130px;
     margin-left: 40px;
     margin-right: 40px;
+    text-align: right;
 }
 .center-h2{
     text-align: center;
@@ -263,23 +270,29 @@ span.place-nr{
     justify-content: space-between;
     font-size: 20px;
 }
+.lastgame-time{
+    min-width: 100px;
+    text-align: right;
+}
 .lastgame-finished{
     flex: 1;
     font-size: 32px;
 }
 .lastgame-questions{
+    min-width: 130px;
     margin-left: 40px;
     margin-right: 40px;
+    text-align: right;
 }
 .lose{
     border: 2px solid #e46962;
     background: #E46962;
-    background: linear-gradient(90deg,rgba(228, 105, 98, 0.1) 0%, rgba(228, 105, 98, 0) 90%);
+    background: linear-gradient(90deg,rgba(228, 105, 98, 0.2) 0%, rgba(228, 105, 98, 0) 60%);
 }
 .win{
     border: 2px solid #4eb97e;
     background: #4EB97E;
-    background: linear-gradient(90deg,rgba(78, 185, 126, 0.1) 0%, rgba(78, 185, 126, 0) 90%);
+    background: linear-gradient(90deg,rgba(78, 185, 126, 0.2) 0%, rgba(78, 185, 126, 0) 60%);
 }
 
 .nothing-here{

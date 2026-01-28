@@ -64,10 +64,6 @@
                         <span>Dodaj nowy quiz</span> 
                     </button>
                 </a>
-                <button class="edit-users">
-                    <img class="icon" src="/img/icons/edit.png" alt="">
-                    <span>Edytuj listę użytkowników</span> 
-                </button>
             </div>
         </section>
         <section class="quizes-list">
@@ -80,8 +76,8 @@
                 <div class="quiz-buttons">
                     <form id="users-form" action="/edit-quiz" method="POST">
                         <button class="play" type="submit" name="quiz-id" value="<%= quiz.id %>">
-                            <img class="icon" src="/img/icons/play.png" alt="">
-                            <span><%= (usersSession[quiz.id] === undefined) ? "Rozpocznij" : "Kontynuuj" %></span> 
+                            <img class="icon" src="/img/icons/edit.png" alt="">
+                            <span>Edytuj</span> 
                         </button>
                     </form>
                     <a href="/lecturer/class/<%= classInfo.id %>/quiz/<%= quiz.id %>/ranking">

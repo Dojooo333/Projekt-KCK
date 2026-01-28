@@ -216,7 +216,7 @@ main .quiz-info{
     height: 50px;
 }
 
-.quit, .next-question{
+.quit, .next-question, #overlay-helpExpert-button, #overlay-helpPublic-button{
     margin-top: 30px;
     font-size: 20px;
     padding: 20px 50px 20px 50px;
@@ -227,7 +227,11 @@ main .quiz-info{
     align-items: center;
     width: 350px;
 }
-.quit:hover, .next-question:hover{
+#helpExpert-text{
+    margin-top: 20px;
+    max-width: 350px;
+}
+.quit:hover, .next-question:hover, #overlay-helpExpert-button:hover, #overlay-helpPublic-button:hover{
     background-color: rgba(0, 33, 50, 0.05);
     cursor: pointer;
 }
@@ -244,4 +248,48 @@ main .quiz-info{
 a, a:active, a:hover, a:visited, a:link{
     text-decoration: none;
     color: rgb(0, 33, 50);
+}
+
+#audience{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 20px;
+    gap: 5px;
+}
+
+#chart-answer-A{
+    height: 25px;
+    background-color: rgba(243, 198, 86, 0.4);
+}
+#chart-answer-B{
+    height: 50px;
+    background-color: rgba(228, 105, 98, 0.4);
+}
+#chart-answer-C{
+    height: 200px;
+    background-color: rgba(59, 160, 212, 0.4);
+}
+#chart-answer-D{
+    height: 30px;
+    background-color: rgba(121, 192, 116, 0.4);
+}
+#charts{
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+#percentages{
+    display: flex;
+    justify-content: space-between;
+}
+#charts div, #percentages div{
+    width: 50px;
+    text-align: center;
+}
+#percentages > div{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
 }

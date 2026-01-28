@@ -64,9 +64,146 @@ answerButtons.forEach(buttonClicked => {
                 }, 1000);
             }), 1000;
 
-            console.log(result);
         }catch(error){
             console.error('Error fatching data.');
         }
     });
+});
+
+
+const formHelp = document.getElementById('help-form');
+const overlayHelpExpert = document.getElementById('overlay-helpExpert');
+const overlayHelpPublic = document.getElementById('overlay-helpPublic');
+
+const overlayHelpExpertButton = document.getElementById('overlay-helpExpert-button');
+const overlayHelpPublicButton = document.getElementById('overlay-helpPublic-button');
+
+const help5050 = document.getElementById('help5050');
+const helpExpert = document.getElementById('helpExpert');
+const helpPublic = document.getElementById('helpPublic');
+
+overlayHelpExpertButton.addEventListener('click', async (event) => {
+    overlayHelpExpert.classList.add('hidden');
+});
+overlayHelpPublicButton.addEventListener('click', async (event) => {
+    overlayHelpPublic.classList.add('hidden');
+});
+
+help5050.addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    const formAction = formHelp.action + "/5050";
+
+    const buttons = {
+        'a': document.getElementById('answerA'),
+        'b': document.getElementById('answerB'),
+        'c': document.getElementById('answerC'),
+        'd': document.getElementById('answerD')
+    };
+
+    try{
+
+        help5050.disabled = true;
+
+        const response = await fetch(formAction, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        });
+
+
+        if(!response.ok) throw new Error('Internal error.');
+        const result = await response.json();
+
+        if(result.hide !== null){
+            buttons[result.hide[0]].disabled = true;
+            buttons[result.hide[1]].disabled = true;
+        }
+
+    }catch(error){
+        console.error('Error fatching data.');
+    }
+});
+helpExpert.addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    const formAction = formHelp.action + "/helpExpert";
+    const helpExpertText = document.getElementById('helpExpert-text');
+
+    try{
+
+        helpExpert.disabled = true;
+
+        const response = await fetch(formAction, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        });
+
+        if(!response.ok) throw new Error('Internal error.');
+        const result = await response.json();
+
+        if(result.hint !== null){
+            helpExpertText.textContent = result.hint;
+            overlayHelpExpert.classList.remove('hidden');
+        }
+
+    }catch(error){
+        console.error('Error fatching data.');
+    }
+});
+helpPublic.addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    const formAction = formHelp.action + "/helpPublic";
+
+    const chartAnswer = {
+        'a': document.getElementById('chart-answer-A'),
+        'b': document.getElementById('chart-answer-B'),
+        'c': document.getElementById('chart-answer-C'),
+        'd': document.getElementById('chart-answer-D')
+    };
+
+    const chartPercentageText = {
+        'a': document.getElementById('chart-percentage-A-text'),
+        'b': document.getElementById('chart-percentage-B-text'),
+        'c': document.getElementById('chart-percentage-C-text'),
+        'd': document.getElementById('chart-percentage-D-text')
+    };
+
+    try{
+
+        helpPublic.disabled = true;
+
+        const response = await fetch(formAction, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        });
+
+
+        if(!response.ok) throw new Error('Internal error.');
+        const result = await response.json();
+
+        if(result.chartData !== null){
+            ['a','b','c','d'].forEach(letter => {
+                chartPercentageText[letter].innerText = result.chartData[letter];
+            });
+
+            ['a','b','c','d'].forEach(letter => {
+                chartAnswer[letter].style.height = (result.chartData[letter] * 2) + "px";
+            });
+
+            overlayHelpPublic.classList.remove('hidden');
+        }
+
+    }catch(error){
+        console.error('Error fatching data.');
+    }
 });
